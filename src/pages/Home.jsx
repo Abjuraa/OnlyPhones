@@ -1,17 +1,20 @@
 import { useRef } from 'react'
 import Card from '../components/Card'
 import products from '../Const/Iphones'
-import Left from '../assets/arrowLeft.png'
-import Right from '../assets/arrowRight.png'
+import ScrollButton from '../components/ScrollButton'
+
 
 
 function Home() {
 
     const slideRef = useRef(null)
 
-    const scroll = (direction) => {
+    const scrollCard = (direction) => {
+
+        //Ancho y gap de cada tarjeta a scrollear
         const cardWidth = 220 + 20
 
+        //Logica de scroll
         if (!slideRef.current) return
 
         const { scrollLeft } = slideRef.current
@@ -39,19 +42,8 @@ function Home() {
 
 
             <div className='flex justify-end items-center px-25 py-5 gap-5'>
-                <button
-                    className='rounded-full p-2 bg-zinc-200 hover:bg-zinc-300 transition duration-300 ease-in-out'
-                    onClick={() => scroll('left')}
-                >
-                    <img className='' src={Left} alt="" width={20} height={20} />
-                </button>
-
-                <button
-                    className='rounded-full p-2 bg-zinc-200 hover:bg-zinc-300 transition duration-300 ease-in-out'
-                    onClick={() => scroll("right")}
-                >
-                    <img className='' src={Right} alt="" width={20} height={20} />
-                </button>
+                <ScrollButton direction='left' onClick={() => scrollCard('left')} ></ScrollButton>
+                <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
             </div>
             <h1 className="text-7xl font-bold py-15 px-20">iPhone</h1>
         </div>
