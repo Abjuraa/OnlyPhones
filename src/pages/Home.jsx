@@ -1,37 +1,44 @@
 import { useRef } from 'react'
 import Card from '../components/Card'
-import products from '../Const/Iphones'
+import products from '../const/Iphones'
+import Slider from '../components/Slider'
+import infoSlider from '../const/sliderInfo'
 import ScrollButton from '../components/ScrollButton'
 
 
 
 function Home() {
 
+    const cardRef = useRef(null)
     const slideRef = useRef(null)
 
-    const scrollCard = (direction) => {
-
-        //Ancho y gap de cada tarjeta a scrollear
-        const cardWidth = 220 + 20
-
+    const scrollElement = (ref, itemWidth, direction) => {
         //Logica de scroll
-        if (!slideRef.current) return
+        if (!ref.current) return
 
-        const { scrollLeft } = slideRef.current
-        slideRef.current.scrollTo({
+        const { scrollLeft } = ref.current
+        ref.current.scrollTo({
             left: direction === 'left'
-                ? scrollLeft - cardWidth
-                : scrollLeft + cardWidth,
+                ? scrollLeft - itemWidth
+                : scrollLeft + itemWidth,
             behavior: 'smooth'
         })
+    }
+
+    const scrollCard = (direction) => {
+        scrollElement(cardRef, 220, direction)
+    }
+
+    const scrollSlider = (direction) => {
+        scrollElement(slideRef, 374, direction)
     }
 
     return (
         <div className="flex flex-col">
             <h1 className="text-7xl font-bold py-15 px-20">iPhone</h1>
 
-            <div className="relative overflow-hidden px-22">
-                <div ref={slideRef} className='flex gap-5 overflow-x-auto'>
+            <div className="relative overflow-hidden">
+                <div ref={cardRef} className='flex gap-5 overflow-x-auto ps-22'>
                     {products.map((p) => (
                         <div key={p.id} className='flex-shrink-0 snap-start'>
                             <Card product={p} />
@@ -45,7 +52,23 @@ function Home() {
                 <ScrollButton direction='left' onClick={() => scrollCard('left')} ></ScrollButton>
                 <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
             </div>
-            <h1 className="text-7xl font-bold py-15 px-20">iPhone</h1>
+
+            <h1 className="text-7xl font-bold py-10 px-20">Sobre los iPhone</h1>
+
+            <div className='relative overflow-hidden'>
+                <div ref={slideRef} className="flex gap-3 overflow-x-auto py-2 ps-22 pe-22">
+                    {infoSlider.map((c) => (
+                        <div key={c.id} className="flex-shrink-0 snap-start">
+                            <Slider content={c} />
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className='flex justify-end items-center px-25 py-5 gap-5'>
+                <ScrollButton direction='left' onClick={() => scrollSlider('left')} ></ScrollButton>
+                <ScrollButton direction='right' onClick={() => scrollSlider('right')}></ScrollButton>
+            </div>
         </div>
 
 

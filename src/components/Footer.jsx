@@ -12,7 +12,7 @@ const FooterItems = [
 
 const SocialItems = [
     { icon: WhatsApp, link: "/" },
-    { icon: Instagram, link: "/" },
+    { icon: Instagram, link: "https://www.instagram.com/onlyphones.co/" },
     { icon: Facebook, link: "/" },
 ]
 
@@ -20,7 +20,7 @@ const SocialItems = [
 const Items = ({ title }) => {
     return (
         <ul className='flex flex-col gap-2'>
-            <li className="font-bold text-zinc-800">{title}</li>
+            <li className="font-bold text-zinc-800 pb-3">{title}</li>
             {FooterItems.map((c) => <li key={c.label} className="text-sm text-zinc-500"><><Link to={c.link}>{c.label}</Link></></li>)}
         </ul>
     )
@@ -33,7 +33,7 @@ const SocialNetworks = ({ title }) => {
             <div className="flex flex-row gap-5">
                 {SocialItems.map(({ icon: Icon, link }, c) => (
                     <li key={c} className="text-sm text-zinc-500">
-                        <Link to={link}><Icon /></Link>
+                        <Link to={link} target="_blank"><Icon /></Link>
                     </li>
                 ))}
             </div>
@@ -46,9 +46,9 @@ function Footer() {
     return (
         <div className="flex flex-col bg-zinc-200 w-screen p-15">
             <div className='flex flex-row justify-center gap-20'>
-                <Items title={'Informacion'} content={['Home', 'Categorias', 'Donde comprar', 'Sobre nosotros']}></Items>
-                <Items title={'Informacion'} content={['Home', 'Categorias', 'Donde comprar', 'Sobre nosotros']}></Items>
-                <Items title={'Informacion'} content={['Home', 'Categorias', 'Donde comprar', 'Sobre nosotros']}></Items>
+                <Items title={'Informacion'} ></Items>
+                <Items title={'Informacion'} ></Items>
+                <Items title={'Informacion'} ></Items>
                 <SocialNetworks title={'Redes sociales'}></SocialNetworks>
             </div>
             <div className='flex flex-row justify-center pt-10'>
