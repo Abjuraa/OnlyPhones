@@ -4,7 +4,8 @@ import products from '../const/Iphones'
 import Slider from '../components/Slider'
 import infoSlider from '../const/sliderInfo'
 import ScrollButton from '../components/ScrollButton'
-
+import CardInfo from '../components/CardInfo'
+import cardContent from '../const/cardInfo'
 
 
 function Home() {
@@ -35,7 +36,7 @@ function Home() {
 
     return (
         <div className="flex flex-col">
-            <h1 className="text-7xl font-bold py-15 px-20">iPhone</h1>
+            <h1 className="text-5xl font-bold py-15 px-20">iPhone</h1>
 
             <div className="relative overflow-hidden">
                 <div ref={cardRef} className='flex gap-5 overflow-x-auto ps-22'>
@@ -53,7 +54,7 @@ function Home() {
                 <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
             </div>
 
-            <h1 className="text-7xl font-bold py-10 px-20">Sobre los iPhone</h1>
+            <h1 className="text-5xl font-bold py-10 px-20">Sobre los iPhone</h1>
 
             <div className='relative overflow-hidden'>
                 <div ref={slideRef} className="flex gap-3 overflow-x-auto py-2 ps-22 pe-22">
@@ -69,9 +70,19 @@ function Home() {
                 <ScrollButton direction='left' onClick={() => scrollSlider('left')} ></ScrollButton>
                 <ScrollButton direction='right' onClick={() => scrollSlider('right')}></ScrollButton>
             </div>
+
+            <h1 className="text-5xl font-bold py-10 px-20">Llevalo con tu iPhone</h1>
+
+            <div className="relative">
+                <div className="flex flex-row justify-center gap-10 pb-20">
+                    {cardContent.map((c) => (
+                        <div key={c.id} className="">
+                            <CardInfo content={c}></CardInfo>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
-
-
     )
 }
 

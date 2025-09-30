@@ -3,7 +3,7 @@ const iPhones = [
         id: 1,
         nombre: "iPhone 14 pro",
         valor: 2000000,
-        antes: 3000000,
+        antes: 0,
         img: "https://m.media-amazon.com/images/I/51dhLiB6kjL.jpg",
         descuento: 20
 

@@ -44,7 +44,7 @@ const SocialNetworks = ({ title }) => {
 
 function Footer() {
     return (
-        <div className="flex flex-col bg-zinc-200 w-screen p-15">
+        <div className="flex flex-col bg-slate-100 w-screen py-8">
             <div className='flex flex-row justify-center gap-20'>
                 <Items title={'Informacion'} ></Items>
                 <Items title={'Informacion'} ></Items>
