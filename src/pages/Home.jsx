@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import Card from '../components/Card'
 import products from '../const/Iphones'
 import Slider from '../components/Slider'
@@ -37,7 +38,7 @@ function Home() {
     return (
         <div className="flex flex-col">
             <h1 className="text-5xl font-bold py-15 px-20">iPhone</h1>
-
+            
             <div className="relative overflow-hidden">
                 <div ref={cardRef} className='flex gap-5 overflow-x-auto ps-22'>
                     {products.map((p) => (
