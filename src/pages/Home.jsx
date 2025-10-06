@@ -1,12 +1,12 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../components/Card'
-import products from '../const/products'
+import products from '../Const_tmp/products'
 import Slider from '../components/Slider'
-import infoSlider from '../const/sliderInfo'
+import infoSlider from '../Const_tmp/sliderInfo'
 import ScrollButton from '../components/ScrollButton'
 import CardInfo from '../components/CardInfo'
-import cardContent from '../const/cardInfo'
+import cardContent from '../Const_tmp/cardInfo'
 
 
 function Home() {
@@ -38,7 +38,7 @@ function Home() {
     return (
         <div className="flex flex-col">
             <h1 className="text-5xl font-bold py-15 px-20">iPhone</h1>
-            
+
             <div className="relative overflow-hidden max-w-screen">
                 <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden ps-22 pe-22'>
                     {products.map((p) => (

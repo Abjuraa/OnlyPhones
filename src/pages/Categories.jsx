@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Sidebar from "../components/Sidebar"
 import Card from "../components/Card"
-import products from "../const/products"
+import products from "../Const_tmp/products"
 
 function Categories() {
     const [search, setSearch] = useState("");
