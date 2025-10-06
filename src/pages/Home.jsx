@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../components/Card'
-import products from '../const/Iphones'
+import products from '../const/products'
 import Slider from '../components/Slider'
 import infoSlider from '../const/sliderInfo'
 import ScrollButton from '../components/ScrollButton'

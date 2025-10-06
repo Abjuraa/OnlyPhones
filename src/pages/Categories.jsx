@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Sidebar from "../components/Sidebar"
 import Card from "../components/Card"
-import iPhones from "../const/Iphones"
+import products from "../const/products"
 
 function Categories() {
     const [search, setSearch] = useState("");
@@ -9,7 +9,7 @@ function Categories() {
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 12;
 
-    const filteredProducts = iPhones.filter((products) => {
+    const filteredProducts = products.filter((products) => {
         const matchSearch =
             products.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
             products.valor.toString().includes(search);
