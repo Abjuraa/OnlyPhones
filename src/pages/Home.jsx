@@ -1,12 +1,12 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../components/Card'
-import products from '../Const_tmp/products'
+import products from '../const/products'
 import Slider from '../components/Slider'
-import infoSlider from '../Const_tmp/sliderInfo'
+import infoSlider from '../const/sliderInfo'
 import ScrollButton from '../components/ScrollButton'
 import CardInfo from '../components/CardInfo'
-import cardContent from '../Const_tmp/cardInfo'
+import cardContent from '../const/cardInfo'
 
 
 function Home() {
