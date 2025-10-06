@@ -5,7 +5,7 @@ import Facebook from '../assets/icons/Facebook'
 
 const FooterItems = [
     { label: 'Inicio', link: "/" },
-    { label: 'Categorias', link: "/" },
+    { label: 'Categorias', link: "/categorias" },
     { label: 'Donde comprar', link: "/" },
     { label: 'Sobre nosotros', link: "/" },
 ]

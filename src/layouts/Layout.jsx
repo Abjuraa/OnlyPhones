@@ -8,7 +8,7 @@ function Layout() {
             <div className="border-b border-gray-200 rounded-b-xl">
                 <Navbar />
             </div>
-            <main className='flex ' >
+            <main className='flex' >
                 <Outlet />
             </main>
 

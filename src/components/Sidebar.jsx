@@ -57,7 +57,7 @@ function Sidebar({ search, setSearch, selectedCategories, setSelectedCategories 
                                     checked={selectedCategories.includes(options)}
                                     onChange={() => toggleCategory(options)}
                                 />
-                                {options}
+                                 {options}
                             </li>
                         ))}
                     </ul>

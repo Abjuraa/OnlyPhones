@@ -186,6 +186,17 @@ const iPhones = [
         categoria: "iPhone 17",
         color: "Blanco"
 
+    },
+    {
+        id: 18,
+        nombre: "Airpods 2 generacion",
+        valor: 6000000,
+        antes: 3000000,
+        img: "https://co.tiendasishop.com/cdn/shop/files/IMG-18067860_m_jpeg_1_8c42397a-1e4a-4467-980a-1bed1dcb0438.jpg?v=1757601638&width=823",
+        descuento: 20,
+        categoria: "Airpods",
+        color: "Blanco"
+
     }
 ]
 

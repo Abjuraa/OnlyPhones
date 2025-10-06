@@ -6,7 +6,7 @@ function Card({ product }) {
     }
 
     return (
-        <div className="flex flex-col transition-shadow duration-300 bg-white max-w-[220px]">
+        <div className="flex flex-col transition-shadow bg-white max-w-[220px] min-h-[300px] hover:scale-101 duration-300 ease-in-out rounded-2xl">
             <div className="relative">
                 <img
                     className="px-3 py-2"

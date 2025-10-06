@@ -39,8 +39,8 @@ function Home() {
         <div className="flex flex-col">
             <h1 className="text-5xl font-bold py-15 px-20">iPhone</h1>
             
-            <div className="relative overflow-hidden">
-                <div ref={cardRef} className='flex gap-5 overflow-x-auto ps-22'>
+            <div className="relative overflow-hidden max-w-screen">
+                <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden ps-22 pe-22'>
                     {products.map((p) => (
                         <div key={p.id} className='flex-shrink-0 snap-start'>
                             <Card product={p} />
@@ -50,7 +50,7 @@ function Home() {
             </div>
 
 
-            <div className='flex justify-end items-center px-25 py-5 gap-5'>
+            <div className='flex justify-end px-25 py-5 gap-5'>
                 <ScrollButton direction='left' onClick={() => scrollCard('left')} ></ScrollButton>
                 <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
             </div>
@@ -58,7 +58,7 @@ function Home() {
             <h1 className="text-5xl font-bold py-10 px-20">Sobre los iPhone</h1>
 
             <div className='relative overflow-hidden'>
-                <div ref={slideRef} className="flex gap-3 overflow-x-auto py-2 ps-22 pe-22">
+                <div ref={slideRef} className="flex gap-3 overflow-x-auto overflow-y-hidden py-2 ps-22 pe-22">
                     {infoSlider.map((c) => (
                         <div key={c.id} className="flex-shrink-0 snap-start">
                             <Slider content={c} />
