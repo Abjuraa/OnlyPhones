@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
 import Card from '../components/Card'
 import products from '../const/products'
 import Slider from '../components/Slider'
@@ -7,10 +6,11 @@ import infoSlider from '../const/sliderInfo'
 import ScrollButton from '../components/ScrollButton'
 import CardInfo from '../components/CardInfo'
 import cardContent from '../const/cardInfo'
+import { useProducts } from '../hooks/useProduct'
 
 
 function Home() {
-
+    const { product, latestProduct, loading, error } = useProducts();
     const cardRef = useRef(null)
     const slideRef = useRef(null)
 
@@ -39,21 +39,26 @@ function Home() {
         <div className="flex flex-col">
             <h1 className="text-5xl font-bold py-15 px-20">iPhone</h1>
 
-            <div className="relative overflow-hidden max-w-screen">
-                <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden ps-22 pe-22'>
-                    {products.map((p) => (
-                        <div key={p.id} className='flex-shrink-0 snap-start'>
-                            <Card product={p} />
-                        </div>
-                    ))}
+            {latestProduct.length === 0
+                ? <div className="flex justify-center items-center text-2xl font-bold text-gray-400 ">
+                    <h1>No hay productos disponibles.</h1>
                 </div>
-            </div>
-
-
-            <div className='flex justify-end px-25 py-5 gap-5'>
-                <ScrollButton direction='left' onClick={() => scrollCard('left')} ></ScrollButton>
-                <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
-            </div>
+                : <div className="">
+                    <div className="relative overflow-hidden max-w-screen">
+                        <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden ps-22 pe-22'>
+                            {latestProduct.map((p) => (
+                                <div key={p.id} className='flex-shrink-0 snap-start'>
+                                    <Card product={p} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className='flex justify-end px-25 py-5 gap-5'>
+                        <ScrollButton direction='left' onClick={() => scrollCard('left')} ></ScrollButton>
+                        <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
+                    </div>
+                </div>
+            }
 
             <h1 className="text-5xl font-bold py-10 px-20">Sobre los iPhone</h1>
 

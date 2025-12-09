@@ -1,28 +1,38 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 import Card from "../components/Card"
 import products from "../const/products"
+import api from "../api/axios"
 
 function Categories() {
+    const [product, setProduct] = useState([]);
+    console.log(product)
     const [search, setSearch] = useState("");
-    const [selectedCategories, setSelectedCategories] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 12;
 
-    const filteredProducts = products.filter((products) => {
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await api.get("/api/client/product");
+                setProduct(response.data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        }
+
+        fetchProducts();
+
+    }, [])
+
+
+
+    const filteredProducts = product.filter((products) => {
         const matchSearch =
-            products.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-            products.valor.toString().includes(search);
-
-        const matchCategories =
-            selectedCategories.length === 0 ||
-            selectedCategories.some(
-                (category) =>
-                    (products.color || "").includes(category) ||
-                    (products.categoria || "").includes(category)
-            );
-
-        return matchSearch && matchCategories;
+            products.model.toLowerCase().includes(search.toLowerCase()) ||
+            products.price.toString().includes(search) ||
+            products.color.toLowerCase().includes(search.toLowerCase());
+        return matchSearch;
     });
 
     const indexOfLast = currentPage * productsPerPage;
@@ -32,27 +42,25 @@ function Categories() {
     const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
     return (
-        <div className="flex flex-row justify-between">
-            <div className="flex flex-col ps-10 py-10">
+        <div className="flex flex-col w-full h-full">
+            <div className="flex flex-row ps-10 pt-10 justify-end">
                 <Sidebar
                     search={search}
                     setSearch={setSearch}
-                    selectedCategories={selectedCategories}
-                    setSelectedCategories={setSelectedCategories}
                 />
             </div>
 
-            <div className="flex flex-col flex-1">
-                <div className="flex flex-row flex-wrap gap-10 py-10 px-5">
+            <div className="flex flex-col">
+                <div className="flex flex-row gap-10 py-2 px-5 justify-center items-center">
                     {currentProducts.length === 0 ?
                         (
-                            <div className=" flex-1 flex justify-center items-center">
-                                <p className="text-center text-4xl font-bold text-gray-400">No se encontraron productos para esta categoria</p>
+                            <div className="flex flex-col justify-center items-center py-20">
+                                <p className="text-center text-4xl font-bold text-gray-400">No se encontraron productos, vuelve a intentarlo</p>
                             </div>
                         ) : (
                             currentProducts.map((product) => (
                                 <div
-                                    key={product.id}
+                                    key={product.idProduct}
                                     className="hover:scale-102 transition duration-300 ease-in-out"
                                 >
                                     <Card product={product} />
