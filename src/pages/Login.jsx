@@ -3,13 +3,24 @@ import InputField from "../components/Input"
 import EyeOpen from "../assets/icons/eye-open"
 import EyeClosed from "../assets/icons/eye-closed"
 
+import { registerService } from "../services/authService"
+
 export default function Login() {
 
-    const [correo, setCorreo] = useState("")
-    console.log(correo)
-    const [contrasena, setContrasena] = useState("")
-
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
+
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        try {
+            const data = await registerService(email, password)
+        } catch (error) {
+            
+        }
+    }
 
     return (
         <div className="flex flex-col h-full py-10">
@@ -19,25 +30,26 @@ export default function Login() {
                 <InputField
                     label="Correo"
                     type="email"
-                    value={correo}
-                    onChange={(e) => setCorreo(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Ingresa tu correo electronico"
                 />
 
                 <InputField
                     label="Contraseña"
                     placeholder="Ingresa la contraseña"
-                    value={contrasena}
-                    onChange={(e) => setContrasena(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type={showPassword ? "text" : "password"}
                     icon={showPassword ? <EyeOpen /> : <EyeClosed />}
                     onIconClick={() => setShowPassword(!showPassword)}
                 />
 
                 <button
-                    className=" border rounded-lg bg-slate-950 text-white p-2 mt-4 cursor-pointer
-                            hover:bg-slate-200 hover:text-black transition"
-                    type="button">
+                    className=
+                    "border rounded-lg bg-slate-950 text-white p-2 mt-4 cursor-pointer hover:bg-slate-200 hover:text-black transition"
+                    type="submit"
+                >
                     Inicia sesion
                 </button>
 

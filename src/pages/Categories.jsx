@@ -6,7 +6,6 @@ import api from "../api/axios"
 
 function Categories() {
     const [product, setProduct] = useState([]);
-    console.log(product)
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 12;
