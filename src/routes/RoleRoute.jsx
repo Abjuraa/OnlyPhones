@@ -2,10 +2,13 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function RoleRoute({ allowedRoles }) {
-    const { isAuthenticated, role } = useAuth();
+    const { user, loading } = useAuth();
 
-    if (!isAuthenticated) return <Navigate to="/login" />;
-    if (!allowedRoles.includes(role)) return <Navigate to="/not-authorized" />;
+    if (loading) return <p>Cargando........</p>;
 
-    return <Outlet />;
+    if (!user) return <Navigate to="/login" />
+
+    if (allowedRoles.includes(user.role)) return <Navigate to="/403" />
+
+    return <Outlet />
 }

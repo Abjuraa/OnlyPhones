@@ -6,6 +6,7 @@ import InputField from '../components/Input.jsx';
 import Iphone from '../components/Iphone.jsx';
 import { useAuth } from "../hooks/useAuth.js"
 import Loader from "../assets/icons/Loader.jsx"
+import { RegisterValidator } from '../utils/RegisterValidator.js';
 
 function Register() {
 
@@ -14,15 +15,19 @@ function Register() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false);
+    const [formError, setFormError] = useState("");
     const { register, error, loading } = useAuth();
 
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        if (!name || !email || password === null) {
-            return console.log("los campos no pueden estar vacios")
-        }
+        const registerValidatorError = RegisterValidator({ name, email, password })
 
+        if (registerValidatorError) {
+            setFormError(registerValidatorError);
+            setTimeout(() => setFormError(""), 3000)
+            return;
+        }
         const response = await register({ name, email, password });
         if (!response) return
 
@@ -97,6 +102,24 @@ function Register() {
 
                 <div className="">
                     <Iphone />
+                </div>
+
+                <div>
+                    {formError &&
+                        (
+                            <div className="fixed border border-slate-500 rounded-xl p-3 bottom-2 right-5 z-2 bg-slate-100 text-xs font-semibold shadow-lg fade">
+                                <p>{formError}</p>
+                            </div>
+                        )
+                    }
+
+                    {error &&
+                        (
+                            <div className="fixed border border-slate-500 rounded-xl p-3 bottom-2 right-5 z-2 bg-slate-100 text-xs font-semibold shadow-lg fade">
+                            <p>{error}</p>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </div>
