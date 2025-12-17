@@ -78,7 +78,7 @@ export default function Login() {
                         Crea tu cuenta
                     </a>
                 </div>
-                <div className="flex flex-row gap-2 border border-zinc-300 rounded-lg p-4">
+                <div className="flex flex-row gap-2 border border-gray-200 rounded-lg p-4">
                     <div className="flex flex-col">
                         <SoporteIcon />
                     </div>
