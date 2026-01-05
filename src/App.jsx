@@ -1,21 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+//Rutas privadas
 import PublicRoute from './routes/PublicRoute'
 import RutaPrivada from './routes/PrivateRoute'
 
+// Layout
 import DefaultLayout from './layouts/DefaultLayout'
-import LoguedLayout from './layouts/LoguedLayout'
 
-
+// Rutas publicas
 import { AuthProvider } from './context/AuthContext'
-import Home from './pages/Home'
-import Categories from './pages/Categories'
-import Find from './pages/Find'
+import Home from './pages/user/Home'
+import Categories from './pages/user/Categories'
+import Find from './pages/user/Find'
 import AboutUs from './pages/AboutUs'
-import Register from './pages/Register'
-import Login from './pages/Login'
-
-import RutaPrivadaPage from './pages/RutaPrivada'
+import Register from './pages/auth/Register'
+import Login from './pages/auth/Login'
 
 
 
@@ -31,7 +30,6 @@ function App() {
             <Route element={<PublicRoute />}>
               <Route element={<DefaultLayout />}>
                 <Route path='/' element={<Home />}></Route>
-                <Route path='/categorias' element={<Categories />}></Route>
                 <Route path='/lugarcompra' element={<Find />}></Route>
                 <Route path='/sobrenosotros' element={<AboutUs />}></Route>
                 <Route path='/registrar' element={<Register />}></Route>
@@ -40,10 +38,10 @@ function App() {
             </Route>
 
             <Route element={<RutaPrivada />}>
-              <Route element={<LoguedLayout />}>
+              <Route element={<DefaultLayout />}>
                 <Route path='/privada/home' element={<Home />}></Route>
                 <Route path='/privada/categorias' element={<Categories />}></Route>
-                <Route path='/privada/inicio' element={<RutaPrivadaPage />}></Route>
+                <Route path='/privada/lugarcompra' element={<Find />}></Route>
               </Route>
             </Route>
 

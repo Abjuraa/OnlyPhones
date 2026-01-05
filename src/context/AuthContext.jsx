@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const setUSerFromToken = (token) => {
+    const setUserFromToken = (token) => {
         try {
             const decoded = jwtDecode(token);
 
@@ -19,8 +19,10 @@ export function AuthProvider({ children }) {
             }
 
             const dataUser = {
-                email: decoded.sub,
-                rol: decoded.rol
+                id: decoded.sub,
+                rol: decoded.rol,
+                name: decoded.nombre,
+                email: decoded.email
             }
 
             setUser(dataUser);
@@ -36,7 +38,7 @@ export function AuthProvider({ children }) {
         const token = localStorage.getItem("tokenOnlyPhones")
 
         if (token) {
-            setUSerFromToken(token);
+            setUserFromToken(token);
         } else (
             setUser(null)
         )
@@ -46,7 +48,7 @@ export function AuthProvider({ children }) {
 
     const login = (token) => {
         localStorage.setItem("tokenOnlyPhones", token);
-        return setUSerFromToken(token)
+        return setUserFromToken(token)
     }
 
 

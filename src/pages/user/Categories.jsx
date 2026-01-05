@@ -1,32 +1,21 @@
 import { useEffect, useState } from "react"
-import Sidebar from "../components/Sidebar"
-import Card from "../components/Card"
-import products from "../const/products"
-import api from "../api/axios"
+import Sidebar from "../../components/Sidebar"
+import Card from "../../components/Card"
+import { useProducts } from "../../hooks/useProduct"
 
 function Categories() {
-    const [product, setProduct] = useState([]);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 12;
+    const { getAllProducts, products } = useProducts();
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await api.get("/api/client/product");
-                setProduct(response.data);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        }
-
-        fetchProducts();
-
+        getAllProducts();
     }, [])
 
 
 
-    const filteredProducts = product.filter((products) => {
+    const filteredProducts = products.filter((products) => {
         const matchSearch =
             products.model.toLowerCase().includes(search.toLowerCase()) ||
             products.price.toString().includes(search) ||

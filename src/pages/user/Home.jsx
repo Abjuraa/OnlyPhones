@@ -1,18 +1,20 @@
-import { useRef } from 'react'
-import Card from '../components/Card'
-import products from '../const/products'
-import Slider from '../components/Slider'
-import infoSlider from '../const/sliderInfo'
-import ScrollButton from '../components/ScrollButton'
-import CardInfo from '../components/CardInfo'
-import cardContent from '../const/cardInfo'
-import { useProducts } from '../hooks/useProduct'
-
+import { useRef, useEffect } from 'react'
+import Card from '../../components/Card'
+import Slider from '../../components/Slider'
+import infoSlider from '../../const/sliderInfo'
+import ScrollButton from '../../components/ScrollButton'
+import CardInfo from '../../components/CardInfo'
+import cardContent from '../../const/cardInfo'
+import { useProducts } from '../../hooks/useProduct'
 
 function Home() {
-    const { product, latestProduct, loading, error } = useProducts();
+    const { latestProduct, getLatestProducts } = useProducts();
     const cardRef = useRef(null)
     const slideRef = useRef(null)
+
+    useEffect(() => {
+        getLatestProducts();
+    }, [])
 
     const scrollElement = (ref, itemWidth, direction) => {
         //Logica de scroll

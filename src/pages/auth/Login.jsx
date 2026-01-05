@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import InputField from "../components/Input"
-import EyeOpen from "../assets/icons/eye-open"
-import EyeClosed from "../assets/icons/eye-closed"
-import { useAuth } from "../hooks/useAuth"
-import banner from "../assets/banner/bannerOriginal.png"
-import SoporteIcon from "../assets/icons/Soporte";
+import InputField from "../../components/Input"
+import EyeOpen from "../../assets/icons/eye-open"
+import EyeClosed from "../../assets/icons/eye-closed"
+import { useAuth } from "../../hooks/useAuth"
+import banner from "../../assets/banner/bannerOriginal.png"
+import SoporteIcon from "../../assets/icons/Soporte";
 
 export default function Login() {
 
@@ -24,7 +24,7 @@ export default function Login() {
 
         if (response.status === 200) {
             localStorage.setItem("tokenOnlyPhones", response.data.token);
-            navigate("/privada/inicio");
+            navigate("/privada/home");
             window.location.reload();
         }
     }

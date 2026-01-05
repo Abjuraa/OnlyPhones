@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import EyeClosed from '../assets/icons/eye-closed.jsx';
-import EyeOpen from '../assets/icons/eye-open.jsx';
-import InputField from '../components/Input.jsx';
-import Iphone from '../components/Iphone.jsx';
-import { useAuth } from "../hooks/useAuth.js"
-import Loader from "../assets/icons/Loader.jsx"
-import { RegisterValidator } from '../utils/RegisterValidator.js';
+import EyeClosed from '../../assets/icons/eye-closed.jsx';
+import EyeOpen from '../../assets/icons/eye-open.jsx';
+import InputField from '../../components/Input.jsx';
+import { useAuth } from "../../hooks/useAuth.js"
+import Loader from "../../assets/icons/Loader.jsx"
+import { RegisterValidator } from '../../utils/RegisterValidator.js';
 
 function Register() {
 
