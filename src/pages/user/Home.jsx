@@ -6,11 +6,13 @@ import ScrollButton from '../../components/ScrollButton'
 import CardInfo from '../../components/CardInfo'
 import cardContent from '../../const/cardInfo'
 import { useProducts } from '../../hooks/useProduct'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
     const { latestProduct, getLatestProducts } = useProducts();
     const cardRef = useRef(null)
     const slideRef = useRef(null)
+    const navigate = useNavigate();
 
     useEffect(() => {
         getLatestProducts();
@@ -49,7 +51,11 @@ function Home() {
                     <div className="relative overflow-hidden max-w-screen">
                         <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden ps-22 pe-22'>
                             {latestProduct.map((p) => (
-                                <div key={p.id} className='flex-shrink-0 snap-start'>
+                                <div
+                                    key={p.id}
+                                    onClick={() => navigate(`/privada/producto/${p.idProduct}`)}
+                                    className='flex-shrink-0 snap-start'
+                                >
                                     <Card product={p} />
                                 </div>
                             ))}

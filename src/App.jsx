@@ -15,6 +15,7 @@ import Find from './pages/user/Find'
 import AboutUs from './pages/AboutUs'
 import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
+import Product from './pages/user/Product'
 
 
 
@@ -34,6 +35,8 @@ function App() {
                 <Route path='/sobrenosotros' element={<AboutUs />}></Route>
                 <Route path='/registrar' element={<Register />}></Route>
                 <Route path='/login' element={<Login />}></Route>
+                <Route path='/producto/:id' element={<Product />}></Route>
+
               </Route>
             </Route>
 
@@ -42,6 +45,8 @@ function App() {
                 <Route path='/privada/home' element={<Home />}></Route>
                 <Route path='/privada/categorias' element={<Categories />}></Route>
                 <Route path='/privada/lugarcompra' element={<Find />}></Route>
+                <Route path='/privada/producto/:id' element={<Product />}></Route>
+
               </Route>
             </Route>
 

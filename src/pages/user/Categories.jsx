@@ -2,12 +2,14 @@ import { useEffect, useState } from "react"
 import Sidebar from "../../components/Sidebar"
 import Card from "../../components/Card"
 import { useProducts } from "../../hooks/useProduct"
+import { useNavigate } from "react-router-dom"
 
 function Categories() {
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 12;
     const { getAllProducts, products } = useProducts();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAllProducts();
@@ -49,6 +51,7 @@ function Categories() {
                             currentProducts.map((product) => (
                                 <div
                                     key={product.idProduct}
+                                    onClick={() => navigate(`/privada/producto/${product.idProduct}`)}
                                     className="hover:scale-102 transition duration-300 ease-in-out"
                                 >
                                     <Card product={product} />
