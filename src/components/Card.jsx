@@ -25,7 +25,7 @@ function Card({ product }) {
             </div>
 
             <div className="flex flex-col items-center justify-center px-3 py-4">
-                <h1 className="text-sm font-semibold text-gray-900 ">{product.model}</h1>
+                <h1 className="flex text-center text-sm font-semibold text-gray-900 max-w-[180px]">{product.model}</h1>
                 {product.discount <= 0
                     ? <p className="text-lg font-bold text-gray-900 mt-1">Desde ${formatNumber(product.price)}</p>
                     : (<>

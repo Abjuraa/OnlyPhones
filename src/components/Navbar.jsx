@@ -21,8 +21,6 @@ function Navbar() {
         return name.slice(0, 13) + '...';
     }
 
-    console.log(nameToLong({ name: 'Jonathan' }))
-
     const handleLogout = () => {
         logout();
     }
@@ -33,7 +31,7 @@ function Navbar() {
                 {user
                     ? <>
                         <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/home">Inicio</Link></li>
-                        <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/categorias">Categorias</Link></li>
+                        <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/categorias">Catálogo</Link></li>
                         <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/lugarcompra">Donde comprar</Link></li>
                         <button
                             className="bg-blue-200 w-10 p-2 rounded-full cursor-pointer "

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 function Categories() {
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 12;
+    const productsPerPage = 10;
     const { getAllProducts, products } = useProducts();
     const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ function Categories() {
             </div>
 
             <div className="flex flex-col">
-                <div className="flex flex-row gap-10 py-2 px-5 justify-center items-center">
+                <div className="flex flex-row flex-wrap justify-center items-center gap-10 p-10">
                     {currentProducts.length === 0 ?
                         (
                             <div className="flex flex-col justify-center items-center py-20">
