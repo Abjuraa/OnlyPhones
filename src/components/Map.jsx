@@ -1,13 +1,19 @@
-import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps';
+import { Map, MapControls } from "../components/ui/map";
 
-export default function Maps() {
 
-    const position = { lat: 53.54992, lng: 10.00678 };
+export function MyMap() {
     return (
-        <APIProvider apiKey={'YOUR API KEY HERE'}>
-            <Map defaultCenter={position} defaultZoom={10} mapId="DEMO_MAP_ID">
-                <AdvancedMarker position={position} />
-            </Map>
-        </APIProvider>
-    )
+        <Map center={[-74.08175, 4.60971]} zoom={10}
+            styles={{
+                light: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+            }}
+        >
+            <MapControls
+                position="top-left"
+                showZoom
+                showCompass
+                showFullscreen
+            />
+        </Map>
+    );
 }

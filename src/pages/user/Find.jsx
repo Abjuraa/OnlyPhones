@@ -1,6 +1,6 @@
 import Tienda from "../../assets/icons/Tienda"
-import Map from "../../components/Map"
 import IconLocation from "../../assets/icons/Location"
+import { MyMap } from "../../components/Map"
 
 function Find() {
     return (
@@ -28,6 +28,10 @@ function Find() {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="flex flex-1 h-[300px] ps-10">
+                    <MyMap />
+
                 </div>
             </div>
         </div>
