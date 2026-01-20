@@ -18,6 +18,8 @@ export default function Product() {
     const { id } = useParams();
     const { getProductById, productById } = useProducts();
 
+    console.log(productById)
+
     useEffect(() => {
         getProductById(id);
     }, [id])
@@ -82,14 +84,16 @@ export default function Product() {
                     <div className="flex border-t pb-4"></div>
 
                     <div className="flex grid grid-cols-2 grid-rows-2 gap-5 pb-5">
+
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-green-400">
                                 <Batery />
                                 <h1 className="text-xs font-semibold tracking-widest">SALUD DE BATERIA</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">94%</h1>
+                            <h1 className="text-3xl font-semibold">{productById.batteryPercentage}%</h1>
                             <h1 className="text-xs text-slate-400">Rendimiento optimo</h1>
                         </div>
+
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-blue-400">
                                 <Storage />
@@ -98,12 +102,13 @@ export default function Product() {
                             <h1 className="text-3xl font-semibold">{productById.capacity}</h1>
                             <h1 className="text-xs text-slate-400">Capacidad amplia</h1>
                         </div>
+
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-orange-400">
                                 <VerifyBadge />
-                                <h1 className="text-xs font-semibold tracking-widest">ALMACENAMIENTO</h1>
+                                <h1 className="text-xs font-semibold tracking-widest">GRADO</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">A+</h1>
+                            <h1 className="text-3xl font-semibold">{productById.grade}+</h1>
                             <h1 className="text-xs text-slate-400">Como nuevo</h1>
                         </div>
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
@@ -111,9 +116,9 @@ export default function Product() {
                                 <Shield
                                     color="oklch(78.9% 0.154 211.53)"
                                 />
-                                <h1 className="text-xs font-semibold tracking-widest">ALMACENAMIENTO</h1>
+                                <h1 className="text-xs font-semibold tracking-widest">GARANTIA</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">90 Dias</h1>
+                            <h1 className="text-3xl font-semibold">{productById.garanty} Dias</h1>
                             <h1 className="text-xs text-slate-400">Cobertura total</h1>
                         </div>
                     </div>
@@ -151,13 +156,13 @@ export default function Product() {
                         <div className="flex flex-col gap-2">
                             <h1 className="text-sm font-semibold text-slate-400">ESTADO FISICO</h1>
                             <p className="text-sm">
-                                El equipo se encuentra en <strong>estado excelente (9.5/10)</strong>. No presenta rayaduras en pantalla. El marco de titanio está impecable, con un ligero detalle estético casi imperceptible cerca del puerto de carga.
+                                {productById.physicalState}
                             </p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <h1 className="text-sm font-semibold text-slate-400">HISTORIAL</h1>
                             <p className="text-sm">
-                                Único dueño. Nunca abierto ni reparado. Piezas 100% originales verificadas por nuestro equipo técnico. Incluye caja original y cable original.
+                                {productById.history}
                             </p>
                         </div>
                     </div>
@@ -195,19 +200,19 @@ export default function Product() {
                     <div className="grid grid-cols-3 grid-rows-4 gap-20">
                         <SpecificationsTech
                             title="PANTALLA"
-                            desc='Super Retina XDR OLED 6.1" con ProMotion (120Hz)'
+                            desc={productById.screen}
                         />
                         <SpecificationsTech
                             title="PROCESADOR"
-                            desc='Chip A17 Pro con GPU de 6 núcleos'
+                            desc={productById.processor}
                         />
                         <SpecificationsTech
                             title="CAMARAS"
-                            desc='Sistema Pro de 48MP (Gran angular, Ultra gran angular y Teleobjetivo)'
+                            desc={productById.camera}
                         />
                         <SpecificationsTech
                             title="SEGURIDAD"
-                            desc='Face ID de segunda generación ultra rápido'
+                            desc={productById.security}
                         />
                     </div>
                 </div>
