@@ -10,7 +10,7 @@ function Card({ product }) {
     }
 
     return (
-        <div className="flex flex-col transition-shadow bg-white max-w-[220px] min-h-[300px] hover:scale-101 duration-300 ease-in-out rounded-2xl ">
+        <div className="flex flex-col transition-shadow bg-white max-w-[220px] min-h-[300px] hover:scale-101 duration-300 ease-in-out rounded-2xl">
             <div className="relative flex items-center justify-center h-48 w-full overflow-hidden rounded-t-2xl">
                 <img
                     src={product.image}
@@ -34,7 +34,6 @@ function Card({ product }) {
                     </>
                     )
                 }
-
             </div>
         </div>
     )

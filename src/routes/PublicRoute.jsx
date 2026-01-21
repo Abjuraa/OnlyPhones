@@ -7,7 +7,7 @@ export default function PublicRoute() {
     if (loading) return <p>Cargando...</p>;
 
     if (user) {
-        return <Navigate to="/privada/inicio" replace />;
+        return <Navigate to="/privada/home" replace />;
     }
 
     return <Outlet />;

@@ -34,8 +34,8 @@ function Navbar() {
                         <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/home">Inicio</Link></li>
                         <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/categorias">Catálogo</Link></li>
                         <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/lugarcompra">Donde comprar</Link></li>
-                        {user.rol == "ADMIN" && (
-                            <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/privada/admin">Gestionar productos</Link></li>
+                        {user.role == "ADMIN" && (
+                            <li className="text-sm hover:scale-102 transition duration-300 ease-in-out"> <Link to="/admin/gestionarproductos">Gestionar productos</Link></li>
                         )}
                         <button
                             className="bg-blue-200 w-10 p-2 rounded-full cursor-pointer "

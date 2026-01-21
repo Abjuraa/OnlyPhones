@@ -8,6 +8,8 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const isAuthenticated = !!user;
+
     const setUserFromToken = (token) => {
         try {
             const decoded = jwtDecode(token);
@@ -20,7 +22,7 @@ export function AuthProvider({ children }) {
 
             const dataUser = {
                 id: decoded.sub,
-                rol: decoded.rol,
+                role: decoded.rol,
                 name: decoded.nombre,
                 email: decoded.email
             }
@@ -58,7 +60,7 @@ export function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, loading }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, role: user?.role, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     )
