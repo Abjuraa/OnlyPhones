@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { getProducts, getLatestProduct, getProductsById, getProductsPaginador } from "../services/productService";
+import { getProducts, getLatestProduct, getProductsById, getProductsPaginador, deleteProductsById } from "../services/productService";
 
 export const useProducts = () => {
     const [products, setProducts] = useState([]);
     const [latestProduct, setLatestProduct] = useState([]);
     const [productById, setProductById] = useState([]);
     const [productsPerPage, setProductsPerPage] = useState([]);
+    const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -81,6 +82,20 @@ export const useProducts = () => {
         }
     }
 
+    const deleteProduct = async (id) => {
+        setLoading(true);
+        setError(null);
+        try {
+            await deleteProductsById(id);
+            setSuccess(true);
+        } catch (error) {
+            const message = error?.response?.data?.message ?? "Error del servidor";
+            setError(message);
+        } finally {
+            setLoading(false)
+        }
+    }
 
-    return { products, latestProduct, productById, productsPerPage, productsPaginador, getAllProducts, getLatestProducts, getProductById, loading, error };
+
+    return { products, latestProduct, productById, productsPerPage, productsPaginador, getAllProducts, getLatestProducts, getProductById, deleteProduct, setProductsPerPage, loading, error, success };
 }

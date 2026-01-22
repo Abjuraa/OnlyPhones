@@ -1,22 +1,46 @@
 import { useEffect, useState } from "react";
 import { useProducts } from "../../hooks/useProduct"
 import { ArrowLeftIcon, ArrowRightIcon } from "../../assets/icons/Arrows";
+import Swal from "sweetalert2";
 
 export default function ManageProducts() {
 
     const [page, setPage] = useState(0);
     const DEFAULT_SIZE = 10;
-    const { productsPaginador, productsPerPage } = useProducts();
+    const { productsPaginador, productsPerPage, deleteProduct, setProductsPerPage } = useProducts();
 
     const formatNumber = (price) => {
         return new Intl.NumberFormat("es-CO").format(price);
     }
 
-    console.log("productos por pagina", productsPerPage)
-
     useEffect(() => {
         productsPaginador(page, DEFAULT_SIZE);
     }, [page])
+
+    const handleDeleteProduct = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProduct(id);
+                setProductsPerPage(prevState => ({
+                    ...prevState,
+                    content: prevState.content.filter(product => product.idProduct !== id)
+                }));
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success",
+                });
+            }
+        });
+    }
 
     return (
         <div className="flex flex-row">
@@ -37,7 +61,7 @@ export default function ManageProducts() {
                         </thead>
                         <tbody>
                             {productsPerPage?.content?.map((product) => (
-                                <tr key={product.id} className="border-t hover:bg-gray-50 text-center w-full">
+                                <tr key={product.idProduct} className="border-t hover:bg-gray-50 text-center w-full">
                                     <td className="p-3 justify-items-center">
                                         <img
                                             src={product.image}
@@ -60,7 +84,10 @@ export default function ManageProducts() {
                                         <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
                                             Editar
                                         </button>
-                                        <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        <button
+                                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                                            onClick={() => handleDeleteProduct(product.idProduct)}
+                                        >
                                             Eliminar
                                         </button>
                                     </td>
@@ -87,7 +114,7 @@ export default function ManageProducts() {
                                 onClick={() => setPage(page + 1)}
                                 className="border rounded-lg p-2"
                             >
-                                <ArrowRightIcon/>
+                                <ArrowRightIcon />
                             </button>
                         </div>
                     </div>

@@ -30,5 +30,5 @@ export const getProductsPaginador = async (page, size) => {
 
 export const deleteProductsById = async (id) => {
     const response = await api.delete(`api/admin/deleteproduct/${id}`);
-    return response;
+    return response.data;
 }
