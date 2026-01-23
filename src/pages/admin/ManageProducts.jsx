@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useProducts } from "../../hooks/useProduct"
 import { ArrowLeftIcon, ArrowRightIcon } from "../../assets/icons/Arrows";
 import Swal from "sweetalert2";
+import { icons } from "../../assets/icons";
 
 export default function ManageProducts() {
 
     const [page, setPage] = useState(0);
     const DEFAULT_SIZE = 10;
-    const { productsPaginador, productsPerPage, deleteProduct, setProductsPerPage } = useProducts();
+    const { productsPaginador, productsPerPage, deleteProduct, setProductsPerPage, editProduct } = useProducts();
+    const [edit, setEdit] = useState(false);
+    const [productToEdit, setProductToEdit] = useState(null);
 
     const formatNumber = (price) => {
         return new Intl.NumberFormat("es-CO").format(price);
@@ -19,13 +22,14 @@ export default function ManageProducts() {
 
     const handleDeleteProduct = (id) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Estas seguro?",
+            text: "El producto sera eliminado permanentemente",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Si, eliminar",
+            cancelButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteProduct(id);
@@ -34,14 +38,28 @@ export default function ManageProducts() {
                     content: prevState.content.filter(product => product.idProduct !== id)
                 }));
                 Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
+                    title: "Producto eliminado!",
+                    text: "El producto ha sido eliminado correctamente.",
                     icon: "success",
                 });
             }
         });
     }
 
+
+    const handleEditProduct = (data) => {
+        setEdit(true);
+        setProductToEdit({ ...data });
+    }
+
+    const handleUpdateProduct = async () => {
+        try {
+            editProduct(productToEdit.idProduct, productToEdit);
+            setEdit(false);
+        } catch (error) {
+            console.error("Error updating product:", error);
+        }
+    }
     return (
         <div className="flex flex-row">
             <div className="flex flex-col justify-start items-start w-screen px-4 py-4">
@@ -80,15 +98,17 @@ export default function ManageProducts() {
                                     <td className="p-3">
                                         {product.unitsAvailable >= 1 ? "Disponible" : "No disponible"}
                                     </td>
-                                    <td className="py-7 flex gap-2 justify-center">
-                                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-                                            Editar
+                                    <td className="py-7 flex gap-5 justify-center">
+                                        <button className=""
+                                            onClick={() => handleEditProduct(product)}
+                                        >
+                                            {icons.Edit(20, "oklch(70.4% 0.04 256.788)")}
                                         </button>
                                         <button
-                                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                                            className=""
                                             onClick={() => handleDeleteProduct(product.idProduct)}
                                         >
-                                            Eliminar
+                                            {icons.Trash(20, "oklch(70.4% 0.04 256.788)")}
                                         </button>
                                     </td>
                                 </tr>
@@ -119,6 +139,64 @@ export default function ManageProducts() {
                         </div>
                     </div>
                 </div>
+
+                {edit == true ?
+                    <div className="fixed inset-0 flex justify-center items-center backdrop-blur-xs bg-black/20 py-10">
+                        <div className="bg-white w-2/5 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
+
+                            {/* HEADER */}
+                            <div className="p-4 border-b">
+                                <h1 className="font-bold text-xl">Editar Producto</h1>
+                                <p className="text-xs text-slate-500">
+                                    Actualiza las especificaciones y precio del producto.
+                                </p>
+                            </div>
+
+                            {/* BODY SCROLL */}
+                            <div className="flex-1 overflow-y-auto p-4">
+                                <h1 className="text-sm font-semibold pb-2 border-b mb-3">
+                                    Detalles del producto
+                                </h1>
+
+                                <div className="flex flex-col gap-2 pt-4">
+                                    <label className="text-xs font-semibold">Modelo</label>
+                                    <input type="text"
+                                        className="border border-slate-400 p-2 rounded-lg"
+                                        value={productToEdit.model}
+                                        onChange={(e) => setProductToEdit({ ...productToEdit, model: e.target.value })}
+                                    />
+
+                                    <label className="text-xs font-semibold">Modelo</label>
+                                    <input type="text"
+                                        value={productToEdit.batteryPercentage}
+                                        onChange={(e) => setProductToEdit({ ...productToEdit, batteryPercentage: e.target.value })}
+                                    />
+                                </div>
+
+                                {/* FOOTER FIJO */}
+                                <div className="p-4 border-t flex justify-end gap-2 bg-white">
+                                    <button
+                                        type="button"
+                                        className="px-4 py-2 bg-gray-300 rounded"
+                                        onClick={() => setEdit(false)}
+                                    >
+                                        Cancelar
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={handleUpdateProduct}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    : null}
             </div>
         </div>
     )

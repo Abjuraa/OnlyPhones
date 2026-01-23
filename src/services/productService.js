@@ -28,6 +28,11 @@ export const getProductsPaginador = async (page, size) => {
     return response.data;
 }
 
+export const editProducts = async (id, data) => {
+    const response = await api.put(`api/admin/updateproduct/${id}`, data);
+    return response.data;
+}
+
 export const deleteProductsById = async (id) => {
     const response = await api.delete(`api/admin/deleteproduct/${id}`);
     return response.data;
