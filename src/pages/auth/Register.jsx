@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import EyeClosed from '../../assets/icons/eye-closed.jsx';
-import EyeOpen from '../../assets/icons/eye-open.jsx';
 import InputField from '../../components/Input.jsx';
 import { useAuth } from "../../hooks/useAuth.js"
-import Loader from "../../assets/icons/Loader.jsx"
 import { RegisterValidator } from '../../utils/RegisterValidator.js';
+import { icons } from '../../assets/icons/index.js';
 
 function Register() {
 
@@ -73,7 +71,7 @@ function Register() {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         type={showPassword ? "text" : "password"}
-                        icon={showPassword ? <EyeOpen /> : <EyeClosed />}
+                        icon={showPassword ? <icons.EyeOpen /> : <icons.EyeClosed />}
                         onIconClick={() => setShowPassword(!showPassword)}
                     />
 
@@ -83,7 +81,7 @@ function Register() {
                         value={confirmPassword}
                         onChange={e => setConfirmPassword(e.target.value)}
                         type={showConfirmPassword ? "text" : "password"}
-                        icon={showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
+                        icon={showConfirmPassword ? <icons.EyeOpen /> : <icons.EyeClosed />}
                         onIconClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     />
 
@@ -102,7 +100,7 @@ function Register() {
                         type="submit"
                         disabled={loading}
                     >
-                        {loading ? <Loader /> : "Crear cuenta"}
+                        {loading ? <icons.Loader /> : "Crear cuenta"}
                     </button>
 
                     <div className="flex justify-center text-sm gap-1">

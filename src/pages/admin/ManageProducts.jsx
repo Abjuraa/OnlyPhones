@@ -3,6 +3,7 @@ import { useProducts } from "../../hooks/useProduct"
 import { ArrowLeftIcon, ArrowRightIcon } from "../../assets/icons/Arrows";
 import Swal from "sweetalert2";
 import { icons } from "../../assets/icons";
+import CAPACITIES from "@/const/capacities";
 
 export default function ManageProducts() {
 
@@ -11,6 +12,8 @@ export default function ManageProducts() {
     const { productsPaginador, productsPerPage, deleteProduct, setProductsPerPage, editProduct } = useProducts();
     const [edit, setEdit] = useState(false);
     const [productToEdit, setProductToEdit] = useState(null);
+
+    console.log(CAPACITIES)
 
     const formatNumber = (price) => {
         return new Intl.NumberFormat("es-CO").format(price);
@@ -46,7 +49,6 @@ export default function ManageProducts() {
         });
     }
 
-
     const handleEditProduct = (data) => {
         setEdit(true);
         setProductToEdit({ ...data });
@@ -56,10 +58,18 @@ export default function ManageProducts() {
         try {
             editProduct(productToEdit.idProduct, productToEdit);
             setEdit(false);
+            window.location.reload();
         } catch (error) {
             console.error("Error updating product:", error);
         }
     }
+
+    const labelDefault = (text) => {
+        return (
+            <label className="text-xs font-semibold">{text}</label>
+        )
+    }
+
     return (
         <div className="flex flex-row">
             <div className="flex flex-col justify-start items-start w-screen px-4 py-4">
@@ -87,10 +97,12 @@ export default function ManageProducts() {
                                             className="w-16 h-16 object-cover rounded"
                                         />
                                     </td>
-                                    <td className="p-3 flex flex-col items-start text-lg font-semibold">{product.model} <br />
+                                    <td className="p-3 flex flex-col items-start text-lg font-semibold">
+                                        {product.model}
+                                        <br />
                                         <span className="text-sm text-slate-500 font-normal">{product.color}</span>
                                     </td>
-                                    <td className="p-3 text-slate-600">{product.capacity}</td>
+                                    <td className="p-3 text-slate-600">{product.capacity >= 1024 ? product.capacity / 1024 + "TB" : product.capacity + "GB"}</td>
                                     <td className={`${product.batteryPercentage >= 95 ? "text-green-700 font-semibold" : product.batteryPercentage > 81 ? "text-yellow-600 font-semibold" : product.batteryPercentage <= 80 && "text-red-600 font-semibold"}`}>
                                         <span className={`${product.batteryPercentage >= 95 ? "p-1 px-2 bg-green-100 rounded-lg" : product.batteryPercentage > 81 ? "p-1 px-2 bg-yellow-100 rounded-lg" : product.batteryPercentage <= 80 && "p-1 px-2 rounded-lg bg-red-100"}`}>{product.batteryPercentage}%</span>
                                     </td>
@@ -99,6 +111,9 @@ export default function ManageProducts() {
                                         {product.unitsAvailable >= 1 ? "Disponible" : "No disponible"}
                                     </td>
                                     <td className="py-7 flex gap-5 justify-center">
+                                        <button className="">
+                                            <a href={`/privada/producto/${product.idProduct}`}><icons.EyeOpenBaseline color={"oklch(70.4% 0.04 256.788)"} size={20} /></a>
+                                        </button>
                                         <button className=""
                                             onClick={() => handleEditProduct(product)}
                                         >
@@ -144,36 +159,67 @@ export default function ManageProducts() {
                     <div className="fixed inset-0 flex justify-center items-center backdrop-blur-xs bg-black/20 py-10">
                         <div className="bg-white w-2/5 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
 
-                            {/* HEADER */}
-                            <div className="p-4 border-b">
+                            <div className="p-4">
                                 <h1 className="font-bold text-xl">Editar Producto</h1>
                                 <p className="text-xs text-slate-500">
                                     Actualiza las especificaciones y precio del producto.
                                 </p>
                             </div>
 
-                            {/* BODY SCROLL */}
-                            <div className="flex-1 overflow-y-auto p-4">
+                            <div className="flex-1 overflow-y-auto px-4">
                                 <h1 className="text-sm font-semibold pb-2 border-b mb-3">
                                     Detalles del producto
                                 </h1>
 
                                 <div className="flex flex-col gap-2 pt-4">
-                                    <label className="text-xs font-semibold">Modelo</label>
+                                    {labelDefault("Imagen")}
+
+                                    <div className="flex flex-col items-center gap-4">
+                                        <img src={productToEdit.image} className="w-xs" alt="" />
+                                        <input className="text-xs text-slate-500 cursor-pointer" type="file" name="" id="" onChange={(e) => setProductToEdit({  })} />
+                                    </div>
+                                    {labelDefault("Modelo")}
                                     <input type="text"
                                         className="border border-slate-400 p-2 rounded-lg"
                                         value={productToEdit.model}
                                         onChange={(e) => setProductToEdit({ ...productToEdit, model: e.target.value })}
                                     />
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {labelDefault("Capacidad")}
+                                        {labelDefault("Salud de Batería (%)")}
 
-                                    <label className="text-xs font-semibold">Modelo</label>
-                                    <input type="text"
-                                        value={productToEdit.batteryPercentage}
-                                        onChange={(e) => setProductToEdit({ ...productToEdit, batteryPercentage: e.target.value })}
-                                    />
+                                        <select
+                                            className="border border-slate-400 p-2 rounded-lg"
+                                            value={productToEdit.capacity}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, capacity: e.target.value })}
+                                        >
+                                            <option value="" disabled>Selecciona una capacidad</option>
+
+                                            {CAPACITIES.map((c) => (
+                                                <option key={c.value} value={c.value}>
+                                                    {c.label}
+                                                </option>
+                                            ))}
+                                        </ select>
+
+                                        <input
+                                            type="text"
+                                            className="border border-slate-400 p-2 rounded-lg"
+                                            value={productToEdit.batteryPercentage}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, batteryPercentage: e.target.value })}
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 pt-2">
+                                        {labelDefault("Imagen")}
+                                        {labelDefault("Precio")}
+
+
+                                        <input type="value" className="flex h-xs" />
+                                    </div>
+
                                 </div>
 
-                                {/* FOOTER FIJO */}
                                 <div className="p-4 border-t flex justify-end gap-2 bg-white">
                                     <button
                                         type="button"

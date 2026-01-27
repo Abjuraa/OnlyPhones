@@ -1,17 +1,8 @@
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useProducts } from "../../hooks/useProduct"
-import Batery from "../../assets/icons/Batery"
-import Storage from "../../assets/icons/Storage"
-import VerifyBadge from "../../assets/icons/VerifyBadge"
-import Shield from "../../assets/icons/Shield"
-import WhatsApp from "@/assets/icons/WhatsApp"
-import Truck from "@/assets/icons/Truck"
-import Money from "@/assets/icons/Money"
-import Store from "@/assets/icons/Store"
-import Analytic from "@/assets/icons/Analytic"
-import Broom from "@/assets/icons/Broom"
 import CardInfoProduct from "@/components/CardInfoProduct"
+import { icons } from "../../assets/icons"
 
 export default function Product() {
 
@@ -53,7 +44,7 @@ export default function Product() {
                     >
                         Catálogo
                     </a>
-                    <h1 className="font-semibold text-gray-500"> <span className="px-2">></span>{productById.model}</h1>
+                    <h1 className="flex flex-row justify-center items-center font-semibold text-gray-500"> <span className="px-2">{<icons.ArrowForward size={10} color={"oklch(55.1% 0.027 264.364)"}/>}</span>{productById.model}</h1>
                 </div>
                 <div className="flex flex-row gap-3">
                     <h1 className="bg-green-200 rounded-lg p-1 text-sm text-green-800 font-semibold">{productById.hasAvailable ? 'Disponible' : 'No disponible'}</h1>
@@ -87,7 +78,7 @@ export default function Product() {
 
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-green-400">
-                                <Batery />
+                                <icons.Batery />
                                 <h1 className="text-xs font-semibold tracking-widest">SALUD DE BATERIA</h1>
                             </div>
                             <h1 className="text-3xl font-semibold">{productById.batteryPercentage}%</h1>
@@ -96,7 +87,7 @@ export default function Product() {
 
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-blue-400">
-                                <Storage />
+                                <icons.Storage />
                                 <h1 className="text-xs font-semibold tracking-widest">ALMACENAMIENTO</h1>
                             </div>
                             <h1 className="text-3xl font-semibold">{productById.capacity}</h1>
@@ -105,7 +96,7 @@ export default function Product() {
 
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-orange-400">
-                                <VerifyBadge />
+                                <icons.VerifyBadge />
                                 <h1 className="text-xs font-semibold tracking-widest">GRADO</h1>
                             </div>
                             <h1 className="text-3xl font-semibold">{productById.grade}+</h1>
@@ -113,7 +104,7 @@ export default function Product() {
                         </div>
                         <div className="flex flex-col border rounded-xl p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-cyan-400">
-                                <Shield
+                                <icons.Shield
                                     color="oklch(78.9% 0.154 211.53)"
                                 />
                                 <h1 className="text-xs font-semibold tracking-widest">GARANTIA</h1>
@@ -124,7 +115,7 @@ export default function Product() {
                     </div>
                     <a href="https://wa.me" className="flex bg-green-400 rounded-full justify-center items-center gap-2 p-3">
                         <div className="text-white">
-                            <WhatsApp />
+                            <icons.WhatsApp />
                         </div>
                         <button className="text-white font-semibold" type="button">Apartar por WhatsApp</button>
                     </a>
@@ -135,13 +126,13 @@ export default function Product() {
                         <div className="flex ">
                             <ul>
                                 <li className="flex flex-row gap-3 items-center text-slate-600 text-sm">
-                                    <Truck /> <span>Envio express a todo el pais (24 - 48hrs)</span>
+                                    <icons.Truck /> <span>Envio express a todo el pais (24 - 48hrs)</span>
                                 </li>
                                 <li className="flex flex-row gap-3 items-center text-slate-600 py-2 text-sm">
-                                    <Store /> <span>Retiro en sucursal hoy mismo</span>
+                                    <icons.Store /> <span>Retiro en sucursal hoy mismo</span>
                                 </li>
                                 <li className="flex flex-row gap-3 items-center text-slate-600 text-sm">
-                                    <Money /> <span>Se acepta tarjetas, transferencias y efectivo</span>
+                                    <icons.Money /> <span>Se acepta tarjetas, transferencias y efectivo</span>
                                 </li>
 
                             </ul>
@@ -175,19 +166,19 @@ export default function Product() {
 
             <div className="grid grid-cols-3 grid-rows-1 pt-5 justify-items-center gap-10 px-10">
                 <CardInfoProduct
-                    Icon={Analytic}
+                    Icon={icons.Analytic}
                     title="Diagnóstico por Software"
                     desc="Validamos que todos los sensores, cámaras y componentes internos funcionen al 100%."
                 />
 
                 <CardInfoProduct
-                    Icon={Broom}
+                    Icon={icons.Broom}
                     title="Limpieza Profunda"
                     desc="Realizamos limpieza de grado quirúrgico en puertos, bocinas y acabados físicos."
                 />
 
                 <CardInfoProduct
-                    Icon={Shield}
+                    Icon={icons.Shield}
                     iconColor="oklch(48.8% 0.243 264.376)"
                     title="Garantia Real"
                     desc="Te entregamos una póliza de garantía por escrito respaldada por nuestro taller."

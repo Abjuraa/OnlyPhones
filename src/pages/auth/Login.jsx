@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import InputField from "../../components/Input"
-import EyeOpen from "../../assets/icons/eye-open"
-import EyeClosed from "../../assets/icons/eye-closed"
 import { useAuth } from "../../hooks/useAuth"
 import banner from "../../assets/banner/bannerOriginal.png"
-import SoporteIcon from "../../assets/icons/Soporte";
+import { icons } from "../../assets/icons"
 
 export default function Login() {
 
@@ -56,7 +54,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type={showPassword ? "text" : "password"}
-                    icon={showPassword ? <EyeOpen /> : <EyeClosed />}
+                    icon={showPassword ? <icons.EyeOpen /> : <icons.EyeClosed />}
                     onIconClick={() => setShowPassword(!showPassword)}
                 />
 
@@ -80,7 +78,7 @@ export default function Login() {
                 </div>
                 <div className="flex flex-row gap-2 border border-gray-200 rounded-lg p-4">
                     <div className="flex flex-col">
-                        <SoporteIcon />
+                        <icons.SoporteIcon />
                     </div>
                     <div className="flex flex-col">
                         <h3 className="font-bold text-sm">¿Necesitas ayuda?</h3>

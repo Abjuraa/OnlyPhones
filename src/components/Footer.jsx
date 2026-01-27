@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom'
-import WhatsApp from '../assets/icons/WhatsApp'
-import Instagram from '../assets/icons/Instagram'
-import Facebook from '../assets/icons/Facebook'
+import { icons } from '../assets/icons/index.js';
 
 const FooterItems = [
     { label: 'Inicio', link: "/" },
@@ -11,9 +9,9 @@ const FooterItems = [
 ]
 
 const SocialItems = [
-    { icon: WhatsApp, link: "/" },
-    { icon: Instagram, link: "https://www.instagram.com/onlyphones.co/" },
-    { icon: Facebook, link: "/" },
+    { icon: icons.WhatsApp, link: "/" },
+    { icon: icons.Instagram, link: "https://www.instagram.com/onlyphones.co/" },
+    { icon: icons.Facebook, link: "/" },
 ]
 
 

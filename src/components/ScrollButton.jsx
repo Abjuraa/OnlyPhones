@@ -1,13 +1,14 @@
-import Left from '../assets/arrowLeft.png'
-import Right from '../assets/arrowRight.png'
+import { icons } from '../assets/icons/index.js';
 
-function ScrollButton({ direction = 'left', onClick }) { 
+function ScrollButton({ direction = 'left', onClick }) {
+
+    const Icon = direction === 'left' ? icons.ArrowLeftIcon : icons.ArrowRightIcon;
     return (
         <button
             className='rounded-full p-2 bg-zinc-200 hover:bg-zinc-300 transition duration-300 ease-in-out'
             onClick={onClick}
         >
-            <img className='' src={direction === 'left' ? Left : Right} alt="" width={20} height={20} />
+            <Icon />
         </button>
     )
 }
