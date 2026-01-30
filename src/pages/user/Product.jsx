@@ -44,10 +44,13 @@ export default function Product() {
                     >
                         Catálogo
                     </a>
-                    <h1 className="flex flex-row justify-center items-center font-semibold text-gray-500"> <span className="px-2">{<icons.ArrowForward size={10} color={"oklch(55.1% 0.027 264.364)"}/>}</span>{productById.model}</h1>
+                    <h1 className="flex flex-row justify-center items-center font-semibold text-gray-500"> <span className="px-2">{<icons.ArrowForward size={10} color={"oklch(55.1% 0.027 264.364)"} />}</span>{productById.model}</h1>
                 </div>
                 <div className="flex flex-row gap-3">
-                    <h1 className="bg-green-200 rounded-lg p-1 text-sm text-green-800 font-semibold">{productById.hasAvailable ? 'Disponible' : 'No disponible'}</h1>
+                    {productById.hasAvailable
+                        ? <h1 className="bg-green-200 rounded-lg p-1 text-sm text-green-800 font-semibold"> Disponible</h1>
+                        : <h1 className="bg-red-200 rounded-lg p-1 text-sm text-red-800 font-semibold">No disponible</h1>
+                    }
                     <h1 className="bg-gray-200 rounded-lg p-1 text-sm font-semibold">{productById.unitsAvailable == 1 ? "Unidad Única" : `${productById.unitsAvailable} Unidades`}</h1>
                 </div>
             </div>
@@ -109,7 +112,7 @@ export default function Product() {
                                 />
                                 <h1 className="text-xs font-semibold tracking-widest">GARANTIA</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">{productById.garanty} Dias</h1>
+                            <h1 className="text-3xl font-semibold">{productById.warranty} Dias</h1>
                             <h1 className="text-xs text-slate-400">Cobertura total</h1>
                         </div>
                     </div>

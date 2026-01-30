@@ -4,6 +4,9 @@ import { ArrowLeftIcon, ArrowRightIcon } from "../../assets/icons/Arrows";
 import Swal from "sweetalert2";
 import { icons } from "../../assets/icons";
 import CAPACITIES from "@/const/capacities";
+import GRADE from "@/const/grades";
+import SelectForm from "@/components/SelectForm";
+import InputForm from "@/components/InputForm";
 
 export default function ManageProducts() {
 
@@ -12,8 +15,8 @@ export default function ManageProducts() {
     const { productsPaginador, productsPerPage, deleteProduct, setProductsPerPage, editProduct } = useProducts();
     const [edit, setEdit] = useState(false);
     const [productToEdit, setProductToEdit] = useState(null);
+    console.log("productToEdit", productToEdit);
 
-    console.log(CAPACITIES)
 
     const formatNumber = (price) => {
         return new Intl.NumberFormat("es-CO").format(price);
@@ -64,9 +67,9 @@ export default function ManageProducts() {
         }
     }
 
-    const labelDefault = (text) => {
+    const labelDefault = ({ text, size = "xs" }) => {
         return (
-            <label className="text-xs font-semibold">{text}</label>
+            <label className={`text-${size} font-semibold`}>{text}</label>
         )
     }
 
@@ -157,7 +160,7 @@ export default function ManageProducts() {
 
                 {edit == true ?
                     <div className="fixed inset-0 flex justify-center items-center backdrop-blur-xs bg-black/20 py-10">
-                        <div className="bg-white w-2/5 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
+                        <div className="bg-white w-2/3 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
 
                             <div className="p-4">
                                 <h1 className="font-bold text-xl">Editar Producto</h1>
@@ -171,53 +174,150 @@ export default function ManageProducts() {
                                     Detalles del producto
                                 </h1>
 
-                                <div className="flex flex-col gap-2 pt-4">
-                                    {labelDefault("Imagen")}
-
-                                    <div className="flex flex-col items-center gap-4">
-                                        <img src={productToEdit.image} className="w-xs" alt="" />
-                                        <input className="text-xs text-slate-500 cursor-pointer" type="file" name="" id="" onChange={(e) => setProductToEdit({  })} />
-                                    </div>
-                                    {labelDefault("Modelo")}
-                                    <input type="text"
-                                        className="border border-slate-400 p-2 rounded-lg"
-                                        value={productToEdit.model}
-                                        onChange={(e) => setProductToEdit({ ...productToEdit, model: e.target.value })}
-                                    />
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {labelDefault("Capacidad")}
-                                        {labelDefault("Salud de Batería (%)")}
-
-                                        <select
-                                            className="border border-slate-400 p-2 rounded-lg"
-                                            value={productToEdit.capacity}
-                                            onChange={(e) => setProductToEdit({ ...productToEdit, capacity: e.target.value })}
-                                        >
-                                            <option value="" disabled>Selecciona una capacidad</option>
-
-                                            {CAPACITIES.map((c) => (
-                                                <option key={c.value} value={c.value}>
-                                                    {c.label}
-                                                </option>
-                                            ))}
-                                        </ select>
-
-                                        <input
+                                { /* LADO IZQUIERDO*/}
+                                <div className="grid grid-cols-2 gap-2 pt-4">
+                                    <div className="flex flex-col pe-10 gap-2">
+                                        {labelDefault({ text: "Modelo" })}
+                                        <InputForm
                                             type="text"
-                                            className="border border-slate-400 p-2 rounded-lg"
-                                            value={productToEdit.batteryPercentage}
-                                            onChange={(e) => setProductToEdit({ ...productToEdit, batteryPercentage: e.target.value })}
+                                            value={productToEdit.model}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, model: e.target.value })}
+                                        />
+                                        <div className="grid grid-cols-2 gap-2 pt-2">
+                                            {labelDefault({ text: "Color" })}
+                                            {labelDefault({ text: "Grado" })}
+
+                                            <InputForm
+                                                type={"text"}
+                                                value={productToEdit.color}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, color: e.target.value })}
+                                            />
+
+                                            <SelectForm
+                                                placeholder={"selecciona un producto"}
+                                                options={GRADE}
+                                                value={productToEdit.grade}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, grade: e.target.value })}
+                                            />
+
+                                            {labelDefault({ text: "Precio" })}
+                                            {labelDefault({ text: "Descuento (%)" })}
+
+                                            <InputForm
+                                                type="number"
+                                                value={productToEdit.price}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, price: e.target.value })}
+                                            />
+
+                                            <InputForm
+                                                type={"number"}
+                                                value={productToEdit.discount}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, discount: e.target.value })}
+                                            />
+                                        </div>
+                                        {labelDefault({ text: "Cámara" })}
+                                        <InputForm
+                                            type="text"
+                                            value={productToEdit.camera}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, camera: e.target.value })}
+                                        />
+
+                                        {labelDefault({ text: "Procesador" })}
+                                        <InputForm
+                                            type="text"
+                                            value={productToEdit.processor}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, processor: e.target.value })}
+                                        />
+
+                                        {labelDefault({ text: "Historial del dispositivo" })}
+
+                                        <textarea
+                                            className="border border-slate-400 p-2 rounded-lg text-sm h-24"
+                                            value={productToEdit.history}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, history: e.target.value })}
+                                        />
+
+                                        {labelDefault({ text: "Estado fisico del producto" })}
+                                        <textarea
+                                            className="border border-slate-400 p-2 rounded-lg text-sm h-24"
+                                            value={productToEdit.physicalState}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, physicalState: e.target.value })}
+                                        />
+
+                                        {labelDefault({ text: "Tipo de seguridad" })}
+
+                                        <textarea
+                                            className="border border-slate-400 p-2 rounded-lg text-sm h-24"
+                                            value={productToEdit.security}
+                                            onChange={(e) => setProductToEdit({ ...productToEdit, security: e.target.value })}
                                         />
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-2 pt-2">
-                                        {labelDefault("Imagen")}
-                                        {labelDefault("Precio")}
+                                    { /* LADO DERECHO*/}
+                                    <div className="flex flex-col pe-10 gap-2">
+                                        {labelDefault({ text: "Imagen del producto" })}
 
+                                        <div className="flex flex-col items-center gap-4">
+                                            <img src={productToEdit.image} className="w-xs" alt="" />
+                                            <input className="text-xs text-slate-500 cursor-pointer" type="file" name="" id="" onChange={(e) => setProductToEdit({})} />
+                                        </div>
 
-                                        <input type="value" className="flex h-xs" />
+                                        <div className="grid grid-cols-2 gap-2 pt-2">
+                                            {labelDefault({ text: "Pantalla" })}
+                                            {labelDefault({ text: "Unidades disponibles" })}
+
+                                            <InputForm
+                                                type={"text"}
+                                                value={productToEdit.screen}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, screen: e.target.value })}
+                                            />
+
+                                            <InputForm
+                                                type={"number"}
+                                                value={productToEdit.unitsAvailable}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, unitsAvailable: e.target.value })}
+                                            />
+
+                                            {labelDefault({ text: "Estado de bateria" })}
+                                            {labelDefault({ text: "Garantia (Dias)" })}
+
+                                            <InputForm
+                                                type={"number"}
+                                                value={productToEdit.batteryPercentage}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, batteryPercentage: e.target.value })}
+                                            />
+                                            <InputForm
+                                                type={"number"}
+                                                value={productToEdit.warranty}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, warranty: e.target.value })}
+                                            />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4 pt-2 items-center justify-items-around">
+                                            <div className="flex flex-col">
+                                                {labelDefault({ text: "Disponible", size: "sm" })}
+                                                <span className="text-xs text-slate-500">Visible en la tienda online</span>
+                                            </div>
+
+                                            <input
+                                                className="border border-slate-400 p-2 rounded-lg text-sm h-5"
+                                                type="checkbox"
+                                                checked={productToEdit.hasAvailable}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, hasAvailable: e.target.checked })}
+                                            />
+
+                                            <div className="flex flex-col">
+                                                {labelDefault({ text: "Aplicar descuento", size: "sm" })}
+                                                <span className="text-xs text-slate-500">Aplicar precio de oferta</span>
+                                            </div>
+
+                                            <input
+                                                className="border border-slate-400 p-2 rounded-lg text-sm h-5"
+                                                type="checkbox"
+                                                checked={productToEdit.hasDiscount}
+                                                onChange={(e) => setProductToEdit({ ...productToEdit, hasDiscount: e.target.checked })}
+                                            />
+                                        </div>
                                     </div>
-
                                 </div>
 
                                 <div className="p-4 border-t flex justify-end gap-2 bg-white">
@@ -244,6 +344,6 @@ export default function ManageProducts() {
 
                     : null}
             </div>
-        </div>
+        </div >
     )
 }
