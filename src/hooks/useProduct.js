@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { getProducts, getLatestProduct, getProductsById, getProductsPaginador, editProducts, deleteProductsById } from "../services/productService";
+import { getProducts, getLatestProduct, getProductsById, getProductsPaginador, createProducts, editProducts, deleteProductsById, editProductImage } from "../services/productService";
 
 export const useProducts = () => {
     const [products, setProducts] = useState([]);
     const [latestProduct, setLatestProduct] = useState([]);
     const [productById, setProductById] = useState([]);
     const [productsPerPage, setProductsPerPage] = useState([]);
-    const [dataProductEdit, setDataProductEdit] = useState([]);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -83,12 +82,43 @@ export const useProducts = () => {
         }
     }
 
+    const createProductHook = async (data) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await createProducts(data);
+            return response
+        } catch (error) {
+            const message = error?.response?.data?.message ?? "Error del servidor";
+            setError(message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     const editProduct = async (id, data) => {
         setError(null);
         setLoading(true);
         try {
             const response = await editProducts(id, data);
             return response
+        } catch (error) {
+            const message = error?.response?.data?.message ?? "Error del servidor";
+            setError(message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
+    const editProductImageHook = async (id, data) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await editProductImage(id, data);
+            return response;
         } catch (error) {
             const message = error?.response?.data?.message ?? "Error del servidor";
             setError(message);
@@ -112,5 +142,5 @@ export const useProducts = () => {
     }
 
 
-    return { products, latestProduct, productById, productsPerPage, productsPaginador, getAllProducts, getLatestProducts, getProductById, deleteProduct, setProductsPerPage, editProduct, dataProductEdit, loading, error, success };
+    return { products, latestProduct, productById, productsPerPage, createProductHook, productsPaginador, getAllProducts, getLatestProducts, getProductById, deleteProduct, setProductsPerPage, editProduct, editProductImageHook, loading, error, success };
 }

@@ -28,8 +28,18 @@ export const getProductsPaginador = async (page, size) => {
     return response.data;
 }
 
+export const createProducts = async (data) => {
+    const response = await api.post("api/admin/createproduct", data);
+    return response.data;
+}
+
 export const editProducts = async (id, data) => {
     const response = await api.put(`api/admin/updateproduct/${id}`, data);
+    return response.data;
+}
+
+export const editProductImage = async (id, data) => {
+    const response = await api.put(`api/admin/product/${id}/image`, data);
     return response.data;
 }
 
