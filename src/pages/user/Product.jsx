@@ -56,12 +56,12 @@ export default function Product() {
             </div>
             <div className="flex flex-row justify-between px-5 pt-5 pb-5">
                 <div className="flex rounded-lg basis-192">
-                    <img src={productById.image} alt="" className="w-150 rounded-lg object-cover" />
+                    <img src={productById.image} alt="" className="w-full rounded-lg object-contain" />
                 </div>
 
                 <div className="flex flex-col justify-start w-2/4 py-5 px-2 gap-1 basis-128">
                     <h1 className="text-4xl font-semibold ">{productById.model}</h1>
-                    <h1 className="text-lg text-gray-500">{productById.color}  •  {productById.capacity}</h1>
+                    <h1 className="text-lg text-gray-500">{productById.color}  •  {productById.capacity >= 1024 ? `${productById.capacity / 1024} TB` : `${productById.capacity} GB`}</h1>
                     {productById.hasDiscount
                         ? (
                             <div className="flex gap-5 items-end pt-3 pb-3">
@@ -93,7 +93,7 @@ export default function Product() {
                                 <icons.Storage />
                                 <h1 className="text-xs font-semibold tracking-widest">ALMACENAMIENTO</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">{productById.capacity}</h1>
+                            <h1 className="text-3xl font-semibold">{productById.capacity >= 1024 ? `${productById.capacity / 1024} TB` : `${productById.capacity} GB`}</h1>
                             <h1 className="text-xs text-slate-400">Capacidad amplia</h1>
                         </div>
 
