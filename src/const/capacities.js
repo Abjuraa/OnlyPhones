@@ -1,4 +1,5 @@
 const CAPACITIES = [
+    { label: "0", value: 0 },
     { label: "64GB", value: 64 },
     { label: "128GB", value: 128 },
     { label: "256GB", value: 256 },
