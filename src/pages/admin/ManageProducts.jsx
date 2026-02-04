@@ -12,13 +12,19 @@ export default function ManageProducts() {
 
     const [page, setPage] = useState(0);
     const DEFAULT_SIZE = 10;
-    const { createProductHook, productsPaginador, productsPerPage, deleteProduct, setProductsPerPage, editProduct, editProductImageHook, loading } = useProducts();
+    const { getAllProducts, createProductHook, productsPaginador, productsPerPage, products, deleteProduct, setProductsPerPage, editProduct, editProductImageHook, loading } = useProducts();
     const [edit, setEdit] = useState(false);
     const [productToEdit, setProductToEdit] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const [createFile, setCreateFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [openModalCreate, setOpenModalCreate] = useState(false);
+
+    useEffect(() => {
+        getAllProducts();
+    }, [])
+
+    console.log(products)
     const createProduct = {
         model: "",
         color: "",
@@ -142,7 +148,7 @@ export default function ManageProducts() {
                 </div>
 
                 <div className="w-full flex flex-col justify-center items-center mt-4 py-5">
-                    <table className="w-full max-w-7xl border border-gray-300 shadow-md">
+                    <table className="w-full border border-gray-300 shadow-md">
                         <thead className="">
                             <tr className="text-center">
                                 <th className="p-3 text-sm text-slate-400 font-semibold">IMAGEN</th>
@@ -164,7 +170,7 @@ export default function ManageProducts() {
                                             className="w-16 h-16 object-contain rounded"
                                         />
                                     </td>
-                                    <td className="p-3 flex flex-col items-start text-lg font-semibold">
+                                    <td className="p-3 px-5 flex flex-col items-start text-lg font-semibold">
                                         {product.model}
                                         <br />
                                         <span className="text-sm text-slate-500 font-normal">{product.color}</span>
@@ -201,8 +207,8 @@ export default function ManageProducts() {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex flex-row w-full justify-center items-center mt-4 px-4 py-3">
-                    <div className="flex flex-row justify-between items-center w-full max-w-6xl px-4">
+                <div className="flex flex-row w-full justify-center items-center mt-4 px-1 py-1">
+                    <div className="flex flex-row justify-between items-center w-full">
                         <p className="text-xs text-slate-500 font-semibold">Mostrando {productsPerPage?.content?.length} de {productsPerPage?.totalItems} productos</p>
 
                         <div className="flex gap-4 justify-center items-center">
