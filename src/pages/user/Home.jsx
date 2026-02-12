@@ -42,7 +42,6 @@ function Home() {
     return (
         <div className="flex flex-col">
             <h1 className="text-5xl font-bold py-15 px-20">Ultimos productos</h1>
-
             {latestProduct.length === 0
                 ? <div className="flex justify-center items-center text-2xl font-bold text-gray-400 ">
                     <h1>No hay productos disponibles.</h1>

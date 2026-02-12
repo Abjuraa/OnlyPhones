@@ -1,4 +1,3 @@
-import IconLocation from "../../assets/icons/Location"
 import { MyMap } from "../../components/Map"
 import { icons } from "../../assets/icons"
 
@@ -6,7 +5,7 @@ function Find() {
     return (
         <div className="flex flex-col h-screen w-full items-start pt-10 px-40">
             <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-6xl">Nuestra Tienda</h1>
+                <h1 className="font-sans font-bold text-6xl">Nuestra Tienda</h1>
                 <p className="text-zinc-500 max-w-2xl">Visitanos para conocer lo ultimo en tecnologia y recibir asesoria personalizada de nuestro equipo</p>
             </div>
 
