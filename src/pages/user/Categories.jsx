@@ -29,7 +29,6 @@ function Categories() {
     const indexOfFirst = indexOfLast - productsPerPage;
     const currentProducts = filteredProducts?.slice(indexOfFirst, indexOfLast);
 
-    console.log(currentProducts);
 
     const totalPages = Math.ceil(filteredProducts?.length / productsPerPage);
 
@@ -44,7 +43,7 @@ function Categories() {
 
             <div className="flex flex-col">
                 <div className="flex flex-row flex-wrap justify-center items-center gap-10 p-10">
-                    {currentProducts === undefined ?
+                    {currentProducts?.length === 0 ?
                         (
                             <div className="flex flex-col justify-center items-center py-20">
                                 <p className="text-center text-4xl font-bold text-gray-400">No se encontraron productos, vuelve más tarde</p>

@@ -42,14 +42,14 @@ function Home() {
     return (
         <div className="flex flex-col">
             <h1 className="text-5xl font-bold py-15 px-20">Ultimos productos</h1>
-            {latestProduct.length === 0
+            {latestProduct?.length === 0
                 ? <div className="flex justify-center items-center text-2xl font-bold text-gray-400 ">
                     <h1>No hay productos disponibles.</h1>
                 </div>
                 : <div className="">
                     <div className="relative overflow-hidden max-w-screen">
                         <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden ps-22 pe-22'>
-                            {latestProduct.map((p) => (
+                            {latestProduct?.map((p) => (
                                 <div
                                     key={p.id}
                                     onClick={() => navigate(`/privada/producto/${p.idProduct}`)}

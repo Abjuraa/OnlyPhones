@@ -13,7 +13,7 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false)
     const { login, error, loading } = useAuth();
 
-
+    console.log(import.meta.env.VITE_BACKEND_URL)
     const handleLogin = async (e) => {
         e.preventDefault();
 

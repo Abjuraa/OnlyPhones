@@ -7,7 +7,6 @@ function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
     const { user, logout } = useAuth();
-    console.log(user);
 
     const shortName = (user) => {
         const name = user.name;

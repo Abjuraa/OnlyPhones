@@ -16,7 +16,7 @@ export const useProducts = () => {
 
         try {
             const response = await getProducts();
-            setProducts(response.data);
+            setProducts(response);
         } catch (error) {
             setError(error.message);
             console.error("Error fetching products:", error);

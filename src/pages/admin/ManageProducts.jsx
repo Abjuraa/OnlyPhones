@@ -24,7 +24,6 @@ export default function ManageProducts() {
         getAllProducts();
     }, [])
 
-    console.log(products)
     const createProduct = {
         model: "",
         color: "",
