@@ -17,7 +17,7 @@ function Categories() {
 
 
 
-    const filteredProducts = products.filter((products) => {
+    const filteredProducts = products?.filter((products) => {
         const matchSearch =
             products.model.toLowerCase().includes(search.toLowerCase()) ||
             products.price.toString().includes(search) ||
@@ -27,9 +27,11 @@ function Categories() {
 
     const indexOfLast = currentPage * productsPerPage;
     const indexOfFirst = indexOfLast - productsPerPage;
-    const currentProducts = filteredProducts.slice(indexOfFirst, indexOfLast);
+    const currentProducts = filteredProducts?.slice(indexOfFirst, indexOfLast);
 
-    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+    console.log(currentProducts);
+
+    const totalPages = Math.ceil(filteredProducts?.length / productsPerPage);
 
     return (
         <div className="flex flex-col w-full h-full">
@@ -42,13 +44,13 @@ function Categories() {
 
             <div className="flex flex-col">
                 <div className="flex flex-row flex-wrap justify-center items-center gap-10 p-10">
-                    {currentProducts.length === 0 ?
+                    {currentProducts === undefined ?
                         (
                             <div className="flex flex-col justify-center items-center py-20">
-                                <p className="text-center text-4xl font-bold text-gray-400">No se encontraron productos, vuelve a intentarlo</p>
+                                <p className="text-center text-4xl font-bold text-gray-400">No se encontraron productos, vuelve más tarde</p>
                             </div>
                         ) : (
-                            currentProducts.map((product) => (
+                            currentProducts?.map((product) => (
                                 <div
                                     key={product.idProduct}
                                     onClick={() => navigate(`/privada/producto/${product.idProduct}`)}

@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 
 function DefaultLayout() {
     return (
-        <div className='flex flex-col min-h-screen'>
+        <div className='flex flex-col'>
             <div className="border-b border-gray-200 rounded-b-xl">
                 <Navbar />
             </div>

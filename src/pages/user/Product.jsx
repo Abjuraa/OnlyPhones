@@ -9,7 +9,6 @@ export default function Product() {
     const { id } = useParams();
     const { getProductById, productById } = useProducts();
 
-    console.log(productById)
 
     useEffect(() => {
         getProductById(id);
@@ -33,9 +32,8 @@ export default function Product() {
         )
     }
 
-    console.log(productById)
     return (
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-col">
             <div className="flex flex-row justify-between items-center px-5 py-5">
                 <div className="flex text-sm">
                     <a
@@ -54,9 +52,9 @@ export default function Product() {
                     <h1 className="bg-gray-200 rounded-lg p-1 text-sm font-semibold">{productById.unitsAvailable == 1 ? "Unidad Única" : `${productById.unitsAvailable} Unidades`}</h1>
                 </div>
             </div>
-            <div className="flex flex-row justify-between px-5 pt-5 pb-5">
+            <div className="flex flex-row justify-around px-5 pt-5 pb-5">
                 <div className="flex rounded-lg basis-192">
-                    <img src={productById.image} alt="" className="w-full rounded-lg object-contain" />
+                    <img src={productById.image} alt="" className="w-full rounded-lg object-contain " />
                 </div>
 
                 <div className="flex flex-col justify-start w-2/4 py-5 px-2 gap-1 basis-128">
