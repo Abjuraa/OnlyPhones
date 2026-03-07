@@ -58,7 +58,6 @@ function App() {
           </ Routes>
         </ BrowserRouter>
       </AuthProvider>
-
     </div>
   )
 }
