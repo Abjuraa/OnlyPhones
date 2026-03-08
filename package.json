@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -25,6 +25,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1",
+    "sileo": "^0.1.5",
     "sweetalert2": "^11.26.17",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.13"

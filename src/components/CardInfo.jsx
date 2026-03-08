@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function CardInfo({ content }) {
     return (
-        <div className="relative w-[572px] h-[532px] overflow-hidden rounded-4xl hover:scale-101 transition duration-300 ease-in-out">
+        <div className="relative md:w-[572px] md:h-[532px] w-[272px] h-[232px] overflow-hidden rounded-4xl hover:scale-101 transition duration-300 ease-in-out">
             <img
                 className="w-full h-full object-cover"
                 src={content.image}
