@@ -25,16 +25,16 @@ export default function Product() {
 
     function SpecificationsTech({ title, desc }) {
         return (
-            <>
-                <div className="col-start-1 col-end-2 text-slate-400 font-semibold">{title}</div>
-                <div className="col-span-2 col-end-4 text-sm"><p>{desc}</p></div>
-            </>
+            <div className="grid gap-4 py-3 border-b" style={{ gridTemplateColumns: '120px 1fr' }}>
+                <div className="text-slate-400 font-semibold text-sm">{title}</div>
+                <div className="text-sm"><p>{desc}</p></div>
+            </div>
         )
     }
 
     return (
         <div className="flex flex-col">
-            <div className="flex flex-row justify-between items-center px-5 py-5">
+            <div className="flex flex-row justify-between items-start sm:items-center px-5 py-5 gap-2 sm:gap-0">
                 <div className="flex text-sm">
                     <a
                         className="font-semibold text-gray-500"
@@ -52,65 +52,65 @@ export default function Product() {
                     <h1 className="bg-gray-200 rounded-lg p-1 text-sm font-semibold">{productById.unitsAvailable == 1 ? "Unidad Única" : `${productById.unitsAvailable} Unidades`}</h1>
                 </div>
             </div>
-            <div className="flex flex-row justify-around px-5 pt-5 pb-5">
-                <div className="flex rounded-lg basis-192">
-                    <img src={productById.image} alt="" className="w-full rounded-lg object-contain " />
+            <div className="flex flex-col md:flex-row justify-around px-5 pt-5 pb-5 gap-6">
+                <div className="flex rounded-lg md:basis-192 justify-center">
+                    <img src={productById.image} alt="" className="w-64 md:w-full rounded-lg object-contain" />
                 </div>
 
-                <div className="flex flex-col justify-start w-2/4 py-5 px-2 gap-1 basis-128">
-                    <h1 className="text-4xl font-semibold ">{productById.model}</h1>
-                    <h1 className="text-lg text-gray-500">{productById.color}  •  {productById.capacity >= 1024 ? `${productById.capacity / 1024} TB` : `${productById.capacity} GB`}</h1>
+                <div className="flex flex-col justify-start w-full md:w-2/4 py-5 px-2 gap-1 md:basis-128">
+                    <h1 className="text-3xl md:text-4xl font-semibold ">{productById.model}</h1>
+                    <h1 className="text-base md:text-lg text-gray-500">{productById.color}  •  {productById.capacity >= 1024 ? `${productById.capacity / 1024} TB` : `${productById.capacity} GB`}</h1>
                     {productById.hasDiscount
                         ? (
                             <div className="flex gap-5 items-end pt-3 pb-3">
-                                <h1 className="text-4xl font-semibold">${formatNumber(priceWhitDiscount(productById.price, productById.discount))}</h1>
+                                <h1 className="text-3xl md:text-4xl font-semibold">${formatNumber(priceWhitDiscount(productById.price, productById.discount))}</h1>
                                 <h1 className="flex line-through text-lg text-gray-500">${formatNumber(productById.price)}</h1>
                             </div>
                         )
                         : (
                             <div className="flex pt-3 pb-3">
-                                <h1 className="text-4xl font-semibold">${formatNumber(productById.price)}</h1>
+                                <h1 className="text-3xl md:text-4xl font-semibold">${formatNumber(productById.price)}</h1>
                             </div>
                         )
                     }
                     <div className="flex border-t pb-4"></div>
 
-                    <div className="flex grid grid-cols-2 grid-rows-2 gap-5 pb-5">
+                    <div className="grid grid-cols-2 gap-3 md:gap-5 pb-5">
 
-                        <div className="flex flex-col border rounded-xl p-4 gap-2">
+                        <div className="flex flex-col border rounded-xl p-3 md:p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-green-400">
                                 <icons.Batery />
                                 <h1 className="text-xs font-semibold tracking-widest">SALUD DE BATERIA</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">{productById.batteryPercentage}%</h1>
+                            <h1 className="text-2xl md:text-3xl font-semibold">{productById.batteryPercentage}%</h1>
                             <h1 className="text-xs text-slate-400">Rendimiento optimo</h1>
                         </div>
 
-                        <div className="flex flex-col border rounded-xl p-4 gap-2">
+                        <div className="flex flex-col border rounded-xl p-3 md:p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-blue-400">
                                 <icons.Storage />
                                 <h1 className="text-xs font-semibold tracking-widest">ALMACENAMIENTO</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">{productById.capacity >= 1024 ? `${productById.capacity / 1024} TB` : `${productById.capacity} GB`}</h1>
+                            <h1 className="text-2xl md:text-3xl font-semibold">{productById.capacity >= 1024 ? `${productById.capacity / 1024} TB` : `${productById.capacity} GB`}</h1>
                             <h1 className="text-xs text-slate-400">Capacidad amplia</h1>
                         </div>
 
-                        <div className="flex flex-col border rounded-xl p-4 gap-2">
+                        <div className="flex flex-col border rounded-xl p-3 md:p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-orange-400">
                                 <icons.VerifyBadge />
                                 <h1 className="text-xs font-semibold tracking-widest">GRADO</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">{productById.grade}+</h1>
+                            <h1 className="text-2xl md:text-3xl font-semibold">{productById.grade}+</h1>
                             <h1 className="text-xs text-slate-400">Como nuevo</h1>
                         </div>
-                        <div className="flex flex-col border rounded-xl p-4 gap-2">
+                        <div className="flex flex-col border rounded-xl p-3 md:p-4 gap-2">
                             <div className="flex flex-row jusify-center items-center gap-2 text-cyan-400">
                                 <icons.Shield
                                     color="oklch(78.9% 0.154 211.53)"
                                 />
                                 <h1 className="text-xs font-semibold tracking-widest">GARANTIA</h1>
                             </div>
-                            <h1 className="text-3xl font-semibold">{productById.warranty} Dias</h1>
+                            <h1 className="text-2xl md:text-3xl font-semibold">{productById.warranty} Dias</h1>
                             <h1 className="text-xs text-slate-400">Cobertura total</h1>
                         </div>
                     </div>
@@ -126,15 +126,9 @@ export default function Product() {
                     <div className="bg-gray-100 rounded-xl p-4">
                         <div className="flex ">
                             <ul>
-                                <li className="flex flex-row gap-3 items-center text-slate-600 text-sm">
-                                    <icons.Truck /> <span>Envio express a todo el pais (24 - 48hrs)</span>
-                                </li>
-                                <li className="flex flex-row gap-3 items-center text-slate-600 py-2 text-sm">
-                                    <icons.Store /> <span>Retiro en sucursal hoy mismo</span>
-                                </li>
-                                <li className="flex flex-row gap-3 items-center text-slate-600 text-sm">
-                                    <icons.Money /> <span>Se acepta tarjetas, transferencias y efectivo</span>
-                                </li>
+                                <li className="flex flex-row gap-3 items-center text-slate-600 text-sm"><icons.Truck /> <span>Envio express a todo el pais (24 - 48hrs)</span></li>
+                                <li className="flex flex-row gap-3 items-center text-slate-600 py-2 text-sm"><icons.Store /> <span>Retiro en sucursal hoy mismo</span></li>
+                                <li className="flex flex-row gap-3 items-center text-slate-600 text-sm"><icons.Money /> <span>Se acepta tarjetas, transferencias y efectivo</span></li>
 
                             </ul>
                         </div>
@@ -142,9 +136,9 @@ export default function Product() {
                 </div>
             </div>
             <div className="flex p-5 pb-10">
-                <div className="flex flex-col bg-gray-100 w-1/2 p-5 rounded-lg">
+                <div className="flex flex-col bg-gray-100 w-full md:w-1/2 p-5 rounded-lg">
                     <h1 className="font-semibold text-lg">Detalles del producto</h1>
-                    <div className="grid grid-cols-2 grid-rows-1 pt-5 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 grid-rows-1 pt-5 gap-5">
                         <div className="flex flex-col gap-2">
                             <h1 className="text-sm font-semibold text-slate-400">ESTADO FISICO</h1>
                             <p className="text-sm">
@@ -161,11 +155,11 @@ export default function Product() {
                 </div>
             </div>
             <div className="flex flex-col p-5 justify-center items-center py-10">
-                <h1 className="text-4xl font-bold">Calidad Certificada</h1>
-                <h1 className="pt-5 text-slate-400 w-2/4 text-center text-lg">Cada equipo seminuevo pasa por un riguroso proceso de inspeccion de 40 puntos antes de salir a la venta.</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-center">Calidad Certificada</h1>
+                <h1 className="pt-5 text-slate-400 w-full md:w-2/4 text-center text-base md:text-lg">Cada equipo seminuevo pasa por un riguroso proceso de inspeccion de 40 puntos antes de salir a la venta.</h1>
             </div>
 
-            <div className="grid grid-cols-3 grid-rows-1 pt-5 justify-items-center gap-10 px-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pt-5 justify-items-center gap-6 px-6 md:px-10">
                 <CardInfoProduct
                     Icon={icons.Analytic}
                     title="Diagnóstico por Software"
@@ -186,10 +180,10 @@ export default function Product() {
                 />
             </div>
 
-            <div className="flex pt-20 justify-center">
-                <div className="flex flex-col border-t pt-10 pb-20 w-2/3">
-                    <h1 className="font-semibold text-2xl pb-15">Especificaciones Técnicas</h1>
-                    <div className="grid grid-cols-3 grid-rows-4 gap-20">
+            <div className="flex pt-10 md:pt-20 justify-center px-5">
+                <div className="flex flex-col border-t pt-10 pb-20 w-full md:w-2/3">
+                    <h1 className="font-semibold text-2xl pb-8 md:pb-15">Especificaciones Técnicas</h1>
+                    <div className="flex flex-col gap-10">
                         <SpecificationsTech
                             title="PANTALLA"
                             desc={productById.screen}

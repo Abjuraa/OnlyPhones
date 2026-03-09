@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { sileo, Toaster } from 'sileo'
 
 //Rutas privadas
 import PublicRoute from './routes/PublicRoute'
@@ -24,6 +25,7 @@ import ManageProducts from './pages/admin/ManageProducts'
 function App() {
   return (
     <div>
+      <Toaster position="top-center" theme="light" offset={{top: 48}} />
       <AuthProvider>
         <BrowserRouter>
           <Routes>

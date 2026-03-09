@@ -4,7 +4,7 @@ export const RegisterValidator = ({ name, email, password, confirmPassword }) =>
     if (!email.trim()) return "El correo es obligatorio";
     if (!email.includes("@")) return "El correo es invalido";
     if (!password.trim()) return "La contraseña es obligatoria";
-    if (password.length < 8) return "La contraseña debe tener al menos 6 caracteres";
+    if (password.length < 8) return "La contraseña debe tener al menos 8 caracteres";
     if (password !== confirmPassword) return "Las contraseñas no coinciden";
 
     return null;

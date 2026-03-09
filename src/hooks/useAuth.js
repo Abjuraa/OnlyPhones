@@ -1,28 +1,30 @@
 import { useState } from 'react';
 import { registerService, loginService } from '../services/authService';
+import { sileo } from 'sileo';
+import { errorRouter } from '../utils/ErrorRouter';
 
 export function useAuth() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const errorRouter = (err) => {
-        return (
-            err?.response?.data?.message ??
-            "Error del servidor"
-        )
-    }
-
 
     const register = async (data) => {
         setLoading(true);
         setError(null);
-
         try {
-            const response = await registerService(data);
+            const registerPromise = registerService(data)
+            sileo.promise(registerPromise, {
+                loading: { title: "Registrando tus datos..." },
+                success: { title: "Cuenta creada exitosamente" },
+                error: (err) => ({
+                    title: "Error",
+                    description: errorRouter(err)
+                })
+            });
+            const response = await registerPromise;
             return response;
         } catch (error) {
-            setError(errorRouter(error));
-            setTimeout(() => setError(null), 3000)
+            console.log(error);
             return null
         } finally {
             setLoading(false);
@@ -33,14 +35,21 @@ export function useAuth() {
     const login = async (data) => {
         setLoading(true);
         setError(null);
-
         try {
-            const response = await loginService(data);
+            const loginPromise = loginService(data);
+            sileo.promise(loginPromise, {
+                loading: { title: "Iniciando sesión..." },
+                success: { title: "Inicio de sesión exitoso" },
+                error: (err) => ({
+                    title: "Error",
+                    description: errorRouter(err)
+                })
+            });
+            const response = await loginPromise;
             return response;
         } catch (error) {
-            setError(errorRouter(error));
-            setTimeout(() => setError(null), 3000)
-            return null
+            console.log(error);
+            return null;
         } finally {
             setLoading(false);
         }

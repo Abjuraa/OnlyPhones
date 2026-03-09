@@ -3,12 +3,14 @@ import Sidebar from "../../components/Sidebar"
 import Card from "../../components/Card"
 import { useProducts } from "../../hooks/useProduct"
 import { useNavigate } from "react-router-dom"
+import { icons } from "../../assets/icons"
+
 
 function Categories() {
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 10;
-    const { getAllProducts, products } = useProducts();
+    const { getAllProducts, products, loading } = useProducts();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,11 +19,11 @@ function Categories() {
 
 
 
-    const filteredProducts = products?.filter((products) => {
+    const filteredProducts = products?.filter((product) => {
         const matchSearch =
-            products.model.toLowerCase().includes(search.toLowerCase()) ||
-            products.price.toString().includes(search) ||
-            products.color.toLowerCase().includes(search.toLowerCase());
+            product.model.toLowerCase().includes(search.toLowerCase()) ||
+            product.price.toString().includes(search) ||
+            product.color.toLowerCase().includes(search.toLowerCase());
         return matchSearch;
     });
 
@@ -34,21 +36,26 @@ function Categories() {
 
     return (
         <div className="flex flex-col w-full h-full">
-            <div className="flex flex-row ps-10 pt-10 justify-end">
+            <div className="flex flex-row px-5 pt-5 md:ps-10 md:pt-10 justify-center md:justify-end w-full md:pe-20">
                 <Sidebar
                     search={search}
                     setSearch={setSearch}
+                    placeholder="Busca tu nuevo iPhone ..."
                 />
             </div>
 
-            <div className="flex flex-col">
-                <div className="flex flex-row flex-wrap justify-center items-center gap-10 p-10">
-                    {currentProducts?.length === 0 ?
-                        (
+            <div className="flex flex-col w-full">
+                <div className="flex flex-row flex-wrap justify-around items-center gap-4 md:gap-10 p-4 md:p-10 w-full">
+                    {loading
+                        ? <div className="flex justify-center items-center text-slate-500 py-40 md:py-20">
+                            <icons.Loader />
+                        </div>
+                        : currentProducts?.length === 0 ?
+
                             <div className="flex flex-col justify-center items-center py-20">
                                 <p className="text-center text-4xl font-bold text-gray-400">No se encontraron productos, vuelve más tarde</p>
                             </div>
-                        ) : (
+                            :
                             currentProducts?.map((product) => (
                                 <div
                                     key={product.idProduct}
@@ -57,8 +64,8 @@ function Categories() {
                                 >
                                     <Card product={product} />
                                 </div>
-                            ))
-                        )}
+                            )
+                            )}
                 </div>
 
                 <div className="flex justify-center items-center gap-2 py-6 w-full">

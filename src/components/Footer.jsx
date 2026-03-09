@@ -17,7 +17,7 @@ const SocialItems = [
 
 const Items = ({ title }) => {
     return (
-        <ul className='flex flex-col gap-2'>
+        <ul className='flex flex-col gap-2 items-center md:items-start text-center md:text-left'>
             <li className="font-bold text-zinc-800 pb-3">{title}</li>
             {FooterItems.map((c) => <li key={c.label} className="text-sm text-zinc-500"><><Link to={c.link}>{c.label}</Link></></li>)}
         </ul>
@@ -26,7 +26,7 @@ const Items = ({ title }) => {
 
 const SocialNetworks = ({ title }) => {
     return (
-        <ul className="flex flex-col gap-5">
+        <ul className="flex flex-col gap-5 items-center md:items-start text-center md:text-left">
             <li><p className="font-bold text-zinc-800">{title}</p></li>
             <div className="flex flex-row gap-5">
                 {SocialItems.map(({ icon: Icon, link }, c) => (
@@ -42,15 +42,15 @@ const SocialNetworks = ({ title }) => {
 
 function Footer() {
     return (
-        <div className="flex flex-col bg-slate-100 w-screen py-8">
-            <div className='flex flex-row justify-center gap-20'>
+        <div className="flex flex-col bg-slate-100 w-full py-8">
+            <div className='grid grid-cols-2 md:flex md:flex-row justify-center items-center md:items-start gap-10 md:gap-20'>
                 <Items title={'Informacion'} ></Items>
                 <Items title={'Informacion'} ></Items>
                 <Items title={'Informacion'} ></Items>
                 <SocialNetworks title={'Redes sociales'}></SocialNetworks>
             </div>
             <div className='flex flex-row justify-center pt-10'>
-                <p className="text-sm text-zinc-500 text-center mt-10">Copyright © 2023 OnlyPhones. Todos los derechos reservados.</p>
+                <p className="text-sm text-zinc-500 text-center mt-10 px-5 md:px-0">Copyright ©{new Date().getFullYear()} OnlyPhones. Todos los derechos reservados.</p>
             </div>
 
         </div>

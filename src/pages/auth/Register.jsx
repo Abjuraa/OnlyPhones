@@ -4,6 +4,7 @@ import InputField from '../../components/Input.jsx';
 import { useAuth } from "../../hooks/useAuth.js"
 import { RegisterValidator } from '../../utils/RegisterValidator.js';
 import { icons } from '../../assets/icons/index.js';
+import { sileo } from 'sileo';
 
 function Register() {
 
@@ -14,8 +15,8 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [formError, setFormError] = useState("");
-    const { register, error, loading } = useAuth();
+    const [checked, setChecked] = useState(false);
+    const { register, loading } = useAuth();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -23,15 +24,23 @@ function Register() {
         const registerValidatorError = RegisterValidator({ name, email, password, confirmPassword })
 
         if (registerValidatorError) {
-            setFormError(registerValidatorError);
-            setTimeout(() => setFormError(""), 3000)
+            sileo.warning({
+                title: "Llena todos los campos",
+                description: registerValidatorError
+            });
+            return;
+        }
+        if (!checked) {
+            sileo.warning({
+                title: "Acepta los terminos y condiciones",
+                description: "Debes aceptar los terminos y condiciones",
+            });
             return;
         }
         const response = await register({ name, email, password });
         if (!response) return
 
         if (response.status === 200) {
-            localStorage.setItem("tokenOnlyPhones", response.data.token);
             setName("");
             setEmail("");
             setPassword("");
@@ -40,15 +49,15 @@ function Register() {
     }
 
     return (
-        <div className='flex flex-col w-full h-full py-10'>
+        <div className='flex flex-col w-full h-full p-15 md:py-10'>
             <div className="flex flex-col items-center justify-center gap-5">
                 <div className="flex flex-col">
-                    <h1 className='text-4xl font-semibold text-center'>Crea tu cuenta</h1>
+                    <h1 className='text-3xl font-semibold text-center'>Crea tu cuenta</h1>
                     <p className='text-center text-sm text-zinc-500'>Una sola cuenta para todo lo que te guste</p>
                 </div>
 
 
-                <form onSubmit={handleRegister} className="flex flex-col align-center justify-center gap-4 px-10 py-10 w-1/3 shadow rounded-2xl border border-gray-200">
+                <form onSubmit={handleRegister} className="flex flex-col align-center justify-center gap-4 px-10 py-10 lg:w-max-1/3 shadow rounded-2xl border border-gray-200">
                     <InputField
                         label="Nombre Completo"
                         placeholder="Nombre y apellido"
@@ -86,7 +95,7 @@ function Register() {
                     />
 
                     <label className="flex text-sm text-zinc-500 gap-3 items-center justify-center">
-                        <input type="checkbox" name="" id="" />
+                        <input type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
                         <span>
                             He leido y acepto la <a href="" className='text-blue-500'>Politica de Privacidad</a> y los <a href="" className='text-blue-500'>Terminos de Uso.</a>
                         </span>
@@ -94,9 +103,8 @@ function Register() {
 
 
                     <button
-                        className=
-                        "border rounded-lg bg-blue-500 text-white p-2 mt-4 cursor-pointer hover:bg-blue-600 transition duration-300 ease-in-out"
-
+                        className={`border rounded-lg bg-blue-500 text-white p-2 mt-4 cursor-pointer hover:bg-blue-600 transition duration-300 ease-in-out
+                            ${loading ? "hover:cursor-not-allowed" : ""}`}
                         type="submit"
                         disabled={loading}
                     >
@@ -111,24 +119,6 @@ function Register() {
                         </a>
                     </div>
                 </form>
-
-                <div>
-                    {formError &&
-                        (
-                            <div className="fixed p-3 bottom-2 right-5 z-2 bg-slate-200 rounded-xl text-xs font-semibold shadow-lg fade">
-                                <p>{formError}</p>
-                            </div>
-                        )
-                    }
-
-                    {error &&
-                        (
-                            <div className="fixed border border-slate-500 rounded-xl p-3 bottom-2 right-5 z-2 bg-slate-100 text-xs font-semibold shadow-lg fade">
-                                <p>{error}</p>
-                            </div>
-                        )
-                    }
-                </div>
             </div>
         </div>
     );
