@@ -5,7 +5,7 @@ function Find() {
     return (
         <div className="flex flex-col h-full w-full py-10 md:px-40 px-10">
             <div className="flex flex-col gap-2">
-                <h1 className="font-sans font-bold md:text-5xl text-2xl">Nuestra Tienda</h1>
+                <h1 className="font-sans font-bold md:text-5xl text-3xl">Nuestra Tienda</h1>
                 <p className="text-zinc-500 max-w-2xl">Visitanos para conocer lo ultimo en tecnologia y recibir asesoria personalizada de nuestro equipo</p>
             </div>
 

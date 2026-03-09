@@ -7,6 +7,7 @@ import CAPACITIES from "@/const/capacities";
 import GRADE from "@/const/grades";
 import SelectForm from "@/components/SelectForm";
 import InputForm from "@/components/InputForm";
+import Sidebar from "@/components/Sidebar";
 
 export default function ManageProducts() {
 
@@ -19,10 +20,29 @@ export default function ManageProducts() {
     const [createFile, setCreateFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [openModalCreate, setOpenModalCreate] = useState(false);
+    const [search, setSearch] = useState("");
+    const [productsFiltered, setProductsFiltered] = useState([]);
 
     useEffect(() => {
         getAllProducts();
     }, [])
+
+    useEffect(() => {
+        if (!search) {
+            setProductsFiltered(productsPerPage.content || []);
+            return;
+        }
+
+        if (products?.length > 0) {
+            const filtered = products.filter((p) => {
+                return p.model.toLowerCase().includes(search.toLowerCase()) ||
+                    p.color.toLowerCase().includes(search.toLowerCase()) ||
+                    p.price.toString().includes(search);
+            })
+            setProductsFiltered(filtered);
+        }
+
+    }, [search, productsPerPage, products])
 
     const createProduct = {
         model: "",
@@ -130,85 +150,102 @@ export default function ManageProducts() {
 
     return (
         <div className="flex flex-row">
-            <div className="flex flex-col justify-start items-start w-screen px-20 py-15">
-                <div className="flex flex-row w-full justify-between itmems-center">
+            <div className="flex flex-col justify-start items-start w-screen md:px-20 px-5 py-15">
+                <div className="flex flex-col md:flex-row w-full justify-between itmems-center">
                     <div className="flex flex-col gap-1">
-                        <h1 className="font-bold text-5xl ">Inventario de productos</h1>
+                        <h1 className="font-bold md:text-5xl text-3xl">Inventario de productos</h1>
                         <p className="text-slate-400 text-sm">Gestión centralizada de stock de iPhones y productos de Apple.</p>
                     </div>
-                    <div className="flex flex-col items-end justify-center">
-                        <button
-                            type="button"
-                            className="bg-blue-500 p-2 rounded-lg text-white text-sm hover:bg-blue-400 duration-300 ease-in-out"
-                            onClick={() => setOpenModalCreate(true)}
-                        >+ Agregar producto
-                        </button>
+                    <div className="flex md:flex-col flex-row items-center md:items-end justify-between md:gap-4 gap-4 pt-4 md:pt-0">
+                        <div className="">
+                            <button
+                                type="button"
+                                className="bg-blue-500 p-2 rounded-lg text-white text-sm hover:bg-blue-400 duration-300 ease-in-out"
+                                onClick={() => setOpenModalCreate(true)}
+                            >+ Agregar producto
+                            </button>
+                        </div>
+                        <div className="">
+                            <Sidebar
+                                search={search}
+                                setSearch={setSearch}
+                                placeholder="Busca un producto..."
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div className="w-full flex flex-col justify-center items-center mt-4 py-5">
-                    <table className="w-full border border-gray-300 shadow-md">
-                        <thead className="">
-                            <tr className="text-center">
-                                <th className="p-3 text-sm text-slate-400 font-semibold">IMAGEN</th>
-                                <th className="p-3 text-sm text-slate-400 font-semibold">MODELO</th>
-                                <th className="p-3 text-sm text-slate-400 font-semibold">CAPACIDAD</th>
-                                <th className="p-3 text-sm text-slate-400 font-semibold">SALUD</th>
-                                <th className="p-3 text-sm text-slate-400 font-semibold">PRECIO</th>
-                                <th className="p-3 text-sm text-slate-400 font-semibold">ESTADO</th>
-                                <th className="p-3 text-sm text-slate-400 font-semibold">ACCIONES</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {productsPerPage?.content?.map((product) => (
-                                <tr key={product.idProduct} className="border-t hover:bg-gray-50 text-center w-full">
-                                    <td className="p-3 justify-items-center">
-                                        <img
-                                            src={product.image}
-                                            alt={product.model}
-                                            className="w-16 h-16 object-contain rounded"
-                                        />
-                                    </td>
-                                    <td className="p-3 px-5 flex flex-col items-start text-lg font-semibold">
-                                        {product.model}
-                                        <br />
-                                        <span className="text-sm text-slate-500 font-normal">{product.color}</span>
-                                    </td>
-                                    <td className="p-3 text-slate-600">{product.capacity >= 1024 ? product.capacity / 1024 + "TB" : product.capacity + "GB"}</td>
-                                    <td className={`${product.batteryPercentage >= 95 ? "text-green-700 font-semibold" : product.batteryPercentage > 81 ? "text-yellow-600 font-semibold" : product.batteryPercentage <= 80 && "text-red-600 font-semibold"}`}>
-                                        <span className={`${product.batteryPercentage >= 95 ? "p-1 px-2 bg-green-100 rounded-lg" : product.batteryPercentage > 81 ? "p-1 px-2 bg-yellow-100 rounded-lg" : product.batteryPercentage <= 80 && "p-1 px-2 rounded-lg bg-red-100"}`}>{product.batteryPercentage}%</span>
-                                    </td>
-                                    <td className="p-3 font-semibold">${formatNumber(product.price)}</td>
-                                    <td className="p-3">
-                                        {product.hasAvailable === true
-                                            ? <span className="p-1 px-2 bg-green-100 rounded-lg text-green-700 font-semibold">Disponible</span>
-                                            : <span className="p-1 px-2 bg-red-100 rounded-lg text-red-700 font-semibold">No disponible</span>
-                                        }
-                                    </td>
-                                    <td className="py-7 flex gap-5 justify-center">
-                                        <button className="">
-                                            <a href={`/privada/producto/${product.idProduct}`}><icons.EyeOpenBaseline color={"oklch(70.4% 0.04 256.788)"} size={20} /></a>
-                                        </button>
-                                        <button className="cursor-pointer"
-                                            onClick={() => handleEditProduct(product)}
-                                        >
-                                            {icons.Edit(20, "oklch(70.4% 0.04 256.788)")}
-                                        </button>
-                                        <button
-                                            className="cursor-pointer"
-                                            onClick={() => handleDeleteProduct(product.idProduct)}
-                                        >
-                                            {icons.Trash(20, "oklch(70.4% 0.04 256.788)")}
-                                        </button>
-                                    </td>
+                <div className="w-full overflow-x-auto mt-4 py-5">
+                    <div className="min-w-[650px]">
+                        <table className="w-full border border-gray-300 shadow-md">
+                            <thead className="">
+                                <tr className="text-center">
+                                    <th className="p-3 md:text-sm text-xs text-slate-400 font-semibold">IMAGEN</th>
+                                    <th className="p-3 md:text-sm text-xs text-slate-400 font-semibold">MODELO</th>
+                                    <th className="p-3 md:text-sm text-xs text-slate-400 font-semibold">CAPACIDAD</th>
+                                    <th className="p-3 md:text-sm text-xs text-slate-400 font-semibold">SALUD</th>
+                                    <th className="p-3 md:text-sm text-xs text-slate-400 font-semibold">PRECIO</th>
+                                    <th className="p-3 md:text-sm text-xs text-slate-400 font-semibold">ESTADO</th>
+                                    <th className="p-3 md:text-sm text-xs text-slate-400 font-semibold">ACCIONES</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {productsFiltered?.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={7} className="py-10 text-center text-slate-400 font-semibold text-xl md:text-2xl">No se encontraron productos</td>
+                                    </tr>
+                                ) : (
+                                    productsFiltered?.map((product) => (
+                                        <tr key={product.idProduct} className="border-t hover:bg-gray-50 text-center w-full">
+                                            <td className="p-3 justify-items-center">
+                                                <img
+                                                    src={product.image}
+                                                    alt={product.model}
+                                                    className="w-16 h-16 object-contain rounded"
+                                                />
+                                            </td>
+                                            <td className="p-3 px-5 flex flex-col items-start text-sm md:text-lg font-semibold">
+                                                {product.model}
+                                                <br />
+                                                <span className="text-xs text-slate-500 font-normal">{product.color}</span>
+                                            </td>
+                                            <td className="p-3 text-slate-600 text-sm md:text-base">{product.capacity >= 1024 ? product.capacity / 1024 + "TB" : product.capacity + "GB"}</td>
+                                            <td className={`${product.batteryPercentage >= 95 ? "text-green-700 font-semibold text-sm md:text-base" : product.batteryPercentage > 81 ? "text-yellow-600 font-semibold text-sm md:text-base" : product.batteryPercentage <= 80 && "text-red-600 font-semibold text-sm md:text-base"}`}>
+                                                <span className={`${product.batteryPercentage >= 95 ? "p-1 px-2 bg-green-100 rounded-lg" : product.batteryPercentage > 81 ? "p-1 px-2 bg-yellow-100 rounded-lg" : product.batteryPercentage <= 80 && "p-1 px-2 rounded-lg bg-red-100"}`}>{product.batteryPercentage}%</span>
+                                            </td>
+                                            <td className="p-3 font-semibold text-sm md:text-base">${formatNumber(product.price)}</td>
+                                            <td className="p-3">
+                                                {product.hasAvailable === true
+                                                    ? <span className="p-1 px-2 bg-green-100 rounded-lg text-green-700 font-semibold text-sm md:text-base">Disponible</span>
+                                                    : <span className="p-1 px-2 bg-red-100 rounded-lg text-red-700 font-semibold text-sm md:text-base">No disponible</span>
+                                                }
+                                            </td>
+                                            <td className="py-7 flex md:gap-5 gap-3 justify-center">
+                                                <button className="">
+                                                    <a href={`/privada/producto/${product.idProduct}`}><icons.EyeOpenBaseline color={"oklch(70.4% 0.04 256.788)"} size={20} /></a>
+                                                </button>
+                                                <button className="cursor-pointer"
+                                                    onClick={() => handleEditProduct(product)}
+                                                >
+                                                    {icons.Edit(20, "oklch(70.4% 0.04 256.788)")}
+                                                </button>
+                                                <button
+                                                    className="cursor-pointer"
+                                                    onClick={() => handleDeleteProduct(product.idProduct)}
+                                                >
+                                                    {icons.Trash(20, "oklch(70.4% 0.04 256.788)")}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div className="flex flex-row w-full justify-center items-center mt-4 px-1 py-1">
                     <div className="flex flex-row justify-between items-center w-full">
-                        <p className="text-xs text-slate-500 font-semibold">Mostrando {productsPerPage?.content?.length} de {productsPerPage?.totalItems} productos</p>
+                        <p className="text-xs text-slate-500 font-semibold">Mostrando {productsFiltered?.length} de {productsFiltered?.length} productos</p>
 
                         <div className="flex gap-4 justify-center items-center">
                             <button
@@ -233,7 +270,7 @@ export default function ManageProducts() {
                 { /* MODAL CREAR PRODUCTO */}
                 {openModalCreate == true ?
                     <div className="fixed inset-0 flex justify-center items-center backdrop-blur-xs bg-black/20 py-10">
-                        <div className="bg-white w-2/3 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
+                        <div className="bg-white md:w-2/3 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
                             <div className="p-4">
                                 <h1 className="font-bold text-xl">Crear producto</h1>
                                 <p className="text-xs text-slate-500">
@@ -345,7 +382,11 @@ export default function ManageProducts() {
                                         {labelDefault({ text: "Imagen del producto" })}
 
                                         <div className="flex flex-col items-center gap-4">
-                                            <img src={imagePreview} className="w-xs" alt="" />
+                                            {imagePreview ? (
+                                                <img src={imagePreview} className="w-xs" alt="" />
+                                            ) : (
+                                                <img src="https://images.pexels.com/photos/249324/pexels-photo-249324.jpeg" className="w-xs" alt="" />
+                                            )}
                                             <input
                                                 className="text-xs text-slate-500 cursor-pointer"
                                                 type="file"
@@ -462,7 +503,7 @@ export default function ManageProducts() {
 
                 {edit == true ?
                     <div className="fixed inset-0 flex justify-center items-center backdrop-blur-xs bg-black/20 py-10">
-                        <div className="bg-white w-2/3 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
+                        <div className="bg-white md:w-2/3 h-full max-h-[90vh] rounded-lg mx-5 flex flex-col">
 
                             <div className="p-4">
                                 <h1 className="font-bold text-xl">Editar Producto</h1>

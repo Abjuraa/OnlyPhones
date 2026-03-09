@@ -10,8 +10,8 @@ function Card({ product }) {
     }
 
     return (
-        <div className="flex flex-col transition-shadow bg-white max-w-[220px] min-h-[300px] hover:scale-101 duration-300 ease-in-out rounded-2xl">
-            <div className="relative flex items-center justify-center h-48 w-full overflow-hidden rounded-t-2xl">
+        <div className="flex flex-col transition-shadow bg-white w-[160px] sm:w-[220px] min-h-[250px] sm:min-h-[300px] hover:scale-101 duration-300 ease-in-out rounded-2xl shadow-sm sm:shadow-none border border-gray-100 sm:border-transparent">
+            <div className="relative flex items-center justify-center h-40 sm:h-48 w-full overflow-hidden rounded-t-2xl">
                 <img
                     src={product.image}
                     alt={product.model}
@@ -24,13 +24,13 @@ function Card({ product }) {
 
             </div>
 
-            <div className="flex flex-col items-center justify-center px-3 py-4">
-                <h1 className="flex text-center text-sm font-semibold text-gray-900 max-w-[180px]">{product.model}</h1>
+            <div className="flex flex-col items-center justify-center px-1 sm:px-3 py-3 sm:py-4">
+                <h1 className="flex text-center text-xs sm:text-sm font-semibold text-gray-900 w-full justify-center px-1">{product.model}</h1>
                 {product.hasDiscount === false
-                    ? <p className="text-lg font-bold text-gray-900 mt-1">Desde ${formatNumber(product.price)}</p>
+                    ? <p className="text-sm sm:text-lg font-bold text-gray-900 mt-1 text-center">Desde ${formatNumber(product.price)}</p>
                     : (<>
-                        <p className="text-lg font-bold text-gray-900 mt-1">Desde ${formatNumber(priceWithDiscount(product))}</p>
-                        <p className="text-xs text-gray-500 line-through mt-1">Antes ${formatNumber(product.price)}</p>
+                        <p className="text-sm sm:text-lg font-bold text-gray-900 mt-1 text-center">Desde ${formatNumber(priceWithDiscount(product))}</p>
+                        <p className="text-[10px] sm:text-xs text-gray-500 line-through mt-0.5 sm:mt-1 text-center">Antes ${formatNumber(product.price)}</p>
                     </>
                     )
                 }

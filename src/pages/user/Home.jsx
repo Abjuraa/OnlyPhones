@@ -41,7 +41,7 @@ function Home() {
 
     return (
         <div className="flex flex-col">
-            <h1 className="text-xl md:text-5xl font-bold py-15 md:px-20 px-5">Ultimos productos</h1>
+            <h1 className="text-3xl md:text-5xl font-bold py-15 md:px-20 px-5">Ultimos productos</h1>
             {latestProduct?.length === 0
                 ? <div className="flex justify-center items-center md:text-2xl text-xl font-bold text-gray-400 ">
                     <h1>No hay productos disponibles.</h1>
@@ -67,7 +67,7 @@ function Home() {
                 </div>
             }
 
-            <h1 className="md:text-5xl text-xl font-bold py-10 md:px-20 px-5">Sobre los iPhone</h1>
+            <h1 className="md:text-5xl text-3xl font-bold py-10 md:px-20 px-5">Sobre los iPhone</h1>
 
             <div className='relative overflow-hidden'>
                 <div ref={slideRef} className="flex gap-3 overflow-x-auto overflow-y-hidden py-2 md:ps-22 md:pe-22 ps-5 pe-10">
@@ -84,7 +84,7 @@ function Home() {
                 <ScrollButton direction='right' onClick={() => scrollSlider('right')}></ScrollButton>
             </div>
 
-            <h1 className="md:text-5xl text-xl font-bold py-10 md:px-20 px-5">Llevalo con tu iPhone</h1>
+            <h1 className="md:text-5xl text-3xl font-bold py-10 md:px-20 px-5">Llevalo con tu iPhone</h1>
 
             <div className="relative">
                 <div className="flex flex-col md:flex-row justify-center items-center gap-10 pb-20">

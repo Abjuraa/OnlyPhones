@@ -49,10 +49,10 @@ function Register() {
     }
 
     return (
-        <div className='flex flex-col w-full h-full py-10'>
+        <div className='flex flex-col w-full h-full p-15 md:py-10'>
             <div className="flex flex-col items-center justify-center gap-5">
                 <div className="flex flex-col">
-                    <h1 className='text-4xl font-semibold text-center'>Crea tu cuenta</h1>
+                    <h1 className='text-3xl font-semibold text-center'>Crea tu cuenta</h1>
                     <p className='text-center text-sm text-zinc-500'>Una sola cuenta para todo lo que te guste</p>
                 </div>
 

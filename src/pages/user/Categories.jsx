@@ -17,11 +17,11 @@ function Categories() {
 
 
 
-    const filteredProducts = products?.filter((products) => {
+    const filteredProducts = products?.filter((product) => {
         const matchSearch =
-            products.model.toLowerCase().includes(search.toLowerCase()) ||
-            products.price.toString().includes(search) ||
-            products.color.toLowerCase().includes(search.toLowerCase());
+            product.model.toLowerCase().includes(search.toLowerCase()) ||
+            product.price.toString().includes(search) ||
+            product.color.toLowerCase().includes(search.toLowerCase());
         return matchSearch;
     });
 
@@ -34,15 +34,16 @@ function Categories() {
 
     return (
         <div className="flex flex-col w-full h-full">
-            <div className="flex flex-row ps-10 pt-10 justify-end">
+            <div className="flex flex-row px-5 pt-5 md:ps-10 md:pt-10 justify-center md:justify-end w-full md:pe-20">
                 <Sidebar
                     search={search}
                     setSearch={setSearch}
+                    placeholder="Busca tu nuevo iPhone ..."
                 />
             </div>
 
-            <div className="flex flex-col">
-                <div className="flex flex-row flex-wrap justify-center items-center gap-10 p-10">
+            <div className="flex flex-col w-full">
+                <div className="flex flex-row flex-wrap justify-around items-center gap-4 md:gap-10 p-4 md:p-10 w-full">
                     {currentProducts?.length === 0 ?
                         (
                             <div className="flex flex-col justify-center items-center py-20">

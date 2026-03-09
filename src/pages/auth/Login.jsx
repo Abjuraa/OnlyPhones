@@ -38,16 +38,17 @@ export default function Login() {
     }
 
     return (
-        <div className="flex flex-row justify-between items-center w-screen">
-            <div className="flex flex-col h-screen w-1/2">
-                <img className="w-full h-full object-cover" src={banner} alt="" />
-                <div className="">
-                    <p className="absolute text-white bottom-12 left-5 font-bold text-5xl w-1/2">La potencia en tus manos.</p>
-                    <p className="absolute text-white bottom-1 left-5">Descubre la nueva generación de iPhone.</p>
+        <div className="flex flex-col md:flex-row w-full min-h-screen">
+            <div className="hidden md:flex flex-col h-screen w-1/2 relative">
+                <img className="w-full h-full object-cover" src={banner} alt="Banner" />
+                <div className="absolute bottom-0 left-0 p-10 w-full bg-gradient-to-t from-black/80 to-transparent">
+                    <p className="text-white font-bold text-5xl mb-4 w-3/4 shadow-sm">La potencia en tus manos.</p>
+                    <p className="text-white text-lg w-3/4 shadow-sm">Descubre la nueva generación de iPhone.</p>
                 </div>
             </div>
-            <div className="flex flex-col w-1/2 justify-center items-center">
-                <form onSubmit={handleLogin} className="flex flex-col w-full max-w-lg justify-center gap-5 px-5">
+
+            <div className="flex flex-col w-full md:w-1/2 justify-center items-center min-h-screen md:min-h-0 bg-white">
+                <form onSubmit={handleLogin} className="flex flex-col w-full max-w-md lg:max-w-lg justify-center gap-5 px-6 sm:px-10 py-10">
                     <h1 className="text-3xl font-bold">Bienvenido de nuevo</h1>
                     <p className="text-sm text-zinc-500 pb-3">Inicia sesion para ver todos los productos y descuentos que hay disponibles para ti</p>
                     <InputField
