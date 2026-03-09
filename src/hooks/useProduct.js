@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { getProducts, getLatestProduct, getProductsById, getProductsPaginador, createProducts, editProducts, deleteProductsById, editProductImage } from "../services/productService";
+import { sileo } from "sileo";
+import { errorRouter } from "../utils/ErrorRouter";
 
 export const useProducts = () => {
     const [products, setProducts] = useState([]);
@@ -40,6 +42,7 @@ export const useProducts = () => {
             setLoading(false);
         }
     }
+
 
     const getLatestProducts = async () => {
         setLoading(true);
@@ -87,11 +90,20 @@ export const useProducts = () => {
         setError(null);
 
         try {
-            const response = await createProducts(data);
+            const createProductPromise = createProducts(data);
+            sileo.promise(createProductPromise, {
+                loading: { title: "Creando producto... " },
+                success: { title: "Producto creado exitosamente" },
+                error: (err) => ({
+                    title: "Error creando el producto",
+                    description: errorRouter(err)
+                })
+            })
+            const response = await createProductPromise;
             return response
         } catch (error) {
-            const message = error?.response?.data?.message ?? "Error del servidor";
-            setError(message);
+            console.log(error);
+            return null
         } finally {
             setLoading(false);
         }
@@ -100,7 +112,17 @@ export const useProducts = () => {
     const editProduct = async (id, data) => {
         setError(null);
         setLoading(true);
+
         try {
+            const editProductPromise = editProducts(id, data);
+            sileo.promise(editProductPromise, {
+                loading: { title: "Subiendo la informacion..." },
+                success: { title: "Producto actualizado correctamente" },
+                error: (err) => ({
+                    title: "Error editando el producto",
+                    description: errorRouter(err)
+                })
+            })
             const response = await editProducts(id, data);
             return response
         } catch (error) {

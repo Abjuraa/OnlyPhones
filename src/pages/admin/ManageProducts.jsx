@@ -8,6 +8,8 @@ import GRADE from "@/const/grades";
 import SelectForm from "@/components/SelectForm";
 import InputForm from "@/components/InputForm";
 import Sidebar from "@/components/Sidebar";
+import { createProductValidator } from "../../utils/CreateProductValidator";
+import { sileo } from "sileo";
 
 export default function ManageProducts() {
 
@@ -83,14 +85,24 @@ export default function ManageProducts() {
         productsPaginador(page, DEFAULT_SIZE);
     }, [page])
 
-    const handleCreateProduct = async () => {
-        const formData = new FormData();
+    const handleCreateProduct = async (e) => {
+        e.preventDefault();
 
+        const productValidator = createProductValidator(product, createFile);
+        if (productValidator) {
+            sileo.warning({
+                title: "Debes completar todos los campos",
+                description: productValidator
+            });
+            return;
+        }
+
+        const formData = new FormData();
         formData.append("product", JSON.stringify(product));
         formData.append("image", createFile);
-        await createProductHook(formData)
+        await createProductHook(formData);
         setOpenModalCreate(false);
-        window.location.reload();
+        productsPaginador(page, DEFAULT_SIZE);
     }
 
     const handleDeleteProduct = (id) => {
@@ -126,7 +138,19 @@ export default function ManageProducts() {
         setImageFile(null);
     }
 
-    const handleUpdateProduct = async () => {
+    const handleUpdateProduct = async (e) => {
+        e.preventDefault();
+
+        const editProductValidator = createProductValidator(productToEdit, imageFile, true)
+
+        if (editProductValidator) {
+            sileo.warning({
+                title: "Completa los campos",
+                description: editProductValidator
+            })
+            return
+        }
+
         try {
             await editProduct(productToEdit.idProduct, productToEdit);
 
@@ -136,7 +160,7 @@ export default function ManageProducts() {
                 await editProductImageHook(productToEdit.idProduct, formData);
             }
             setEdit(false);
-            window.location.reload();
+            productsPaginador(page, DEFAULT_SIZE);
         } catch (error) {
             console.error("Error updating product:", error);
         }
@@ -190,55 +214,63 @@ export default function ManageProducts() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {productsFiltered?.length === 0 ? (
-                                    <tr>
-                                        <td colSpan={7} className="py-10 text-center text-slate-400 font-semibold text-xl md:text-2xl">No se encontraron productos</td>
+                                {loading
+                                    ? <tr>
+                                        <td colSpan={7} className="py-16 text-center text-slate-500">
+                                            <div className="flex justify-center items-center">
+                                                <icons.Loader />
+                                            </div>
+                                        </td>
                                     </tr>
-                                ) : (
-                                    productsFiltered?.map((product) => (
-                                        <tr key={product.idProduct} className="border-t hover:bg-gray-50 text-center w-full">
-                                            <td className="p-3 justify-items-center">
-                                                <img
-                                                    src={product.image}
-                                                    alt={product.model}
-                                                    className="w-16 h-16 object-contain rounded"
-                                                />
-                                            </td>
-                                            <td className="p-3 px-5 flex flex-col items-start text-sm md:text-lg font-semibold">
-                                                {product.model}
-                                                <br />
-                                                <span className="text-xs text-slate-500 font-normal">{product.color}</span>
-                                            </td>
-                                            <td className="p-3 text-slate-600 text-sm md:text-base">{product.capacity >= 1024 ? product.capacity / 1024 + "TB" : product.capacity + "GB"}</td>
-                                            <td className={`${product.batteryPercentage >= 95 ? "text-green-700 font-semibold text-sm md:text-base" : product.batteryPercentage > 81 ? "text-yellow-600 font-semibold text-sm md:text-base" : product.batteryPercentage <= 80 && "text-red-600 font-semibold text-sm md:text-base"}`}>
-                                                <span className={`${product.batteryPercentage >= 95 ? "p-1 px-2 bg-green-100 rounded-lg" : product.batteryPercentage > 81 ? "p-1 px-2 bg-yellow-100 rounded-lg" : product.batteryPercentage <= 80 && "p-1 px-2 rounded-lg bg-red-100"}`}>{product.batteryPercentage}%</span>
-                                            </td>
-                                            <td className="p-3 font-semibold text-sm md:text-base">${formatNumber(product.price)}</td>
-                                            <td className="p-3">
-                                                {product.hasAvailable === true
-                                                    ? <span className="p-1 px-2 bg-green-100 rounded-lg text-green-700 font-semibold text-sm md:text-base">Disponible</span>
-                                                    : <span className="p-1 px-2 bg-red-100 rounded-lg text-red-700 font-semibold text-sm md:text-base">No disponible</span>
-                                                }
-                                            </td>
-                                            <td className="py-7 flex md:gap-5 gap-3 justify-center">
-                                                <button className="">
-                                                    <a href={`/privada/producto/${product.idProduct}`}><icons.EyeOpenBaseline color={"oklch(70.4% 0.04 256.788)"} size={20} /></a>
-                                                </button>
-                                                <button className="cursor-pointer"
-                                                    onClick={() => handleEditProduct(product)}
-                                                >
-                                                    {icons.Edit(20, "oklch(70.4% 0.04 256.788)")}
-                                                </button>
-                                                <button
-                                                    className="cursor-pointer"
-                                                    onClick={() => handleDeleteProduct(product.idProduct)}
-                                                >
-                                                    {icons.Trash(20, "oklch(70.4% 0.04 256.788)")}
-                                                </button>
-                                            </td>
+                                    : productsFiltered?.length === 0 ?
+                                        <tr>
+                                            <td colSpan={7} className="py-10 text-center text-slate-400 font-semibold text-xl md:text-2xl">No se encontraron productos</td>
                                         </tr>
-                                    ))
-                                )}
+                                        :
+                                        productsFiltered?.map((product) => (
+                                            <tr key={product.idProduct} className="border-t hover:bg-gray-50 text-center w-full">
+                                                <td className="p-3 justify-items-center">
+                                                    <img
+                                                        src={product.image}
+                                                        alt={product.model}
+                                                        className="w-16 h-16 object-contain rounded"
+                                                    />
+                                                </td>
+                                                <td className="p-3 px-5 flex flex-col items-start text-sm md:text-lg font-semibold">
+                                                    {product.model}
+                                                    <br />
+                                                    <span className="text-xs text-slate-500 font-normal">{product.color}</span>
+                                                </td>
+                                                <td className="p-3 text-slate-600 text-sm md:text-base">{product.capacity >= 1024 ? product.capacity / 1024 + "TB" : product.capacity + "GB"}</td>
+                                                <td className={`${product.batteryPercentage >= 95 ? "text-green-700 font-semibold text-sm md:text-base" : product.batteryPercentage > 81 ? "text-yellow-600 font-semibold text-sm md:text-base" : product.batteryPercentage <= 80 && "text-red-600 font-semibold text-sm md:text-base"}`}>
+                                                    <span className={`${product.batteryPercentage >= 95 ? "p-1 px-2 bg-green-100 rounded-lg" : product.batteryPercentage > 81 ? "p-1 px-2 bg-yellow-100 rounded-lg" : product.batteryPercentage <= 80 && "p-1 px-2 rounded-lg bg-red-100"}`}>{product.batteryPercentage}%</span>
+                                                </td>
+                                                <td className="p-3 font-semibold text-sm md:text-base">${formatNumber(product.price)}</td>
+                                                <td className="p-3">
+                                                    {product.hasAvailable === true
+                                                        ? <span className="p-1 px-2 bg-green-100 rounded-lg text-green-700 font-semibold text-sm md:text-base">Disponible</span>
+                                                        : <span className="p-1 px-2 bg-red-100 rounded-lg text-red-700 font-semibold text-sm md:text-base">No disponible</span>
+                                                    }
+                                                </td>
+                                                <td className="py-7 flex md:gap-5 gap-3 justify-center">
+                                                    <button className="">
+                                                        <a href={`/privada/producto/${product.idProduct}`}><icons.EyeOpenBaseline color={"oklch(70.4% 0.04 256.788)"} size={20} /></a>
+                                                    </button>
+                                                    <button className="cursor-pointer"
+                                                        onClick={() => handleEditProduct(product)}
+                                                    >
+                                                        {icons.Edit(20, "oklch(70.4% 0.04 256.788)")}
+                                                    </button>
+                                                    <button
+                                                        className="cursor-pointer"
+                                                        onClick={() => handleDeleteProduct(product.idProduct)}
+                                                    >
+                                                        {icons.Trash(20, "oklch(70.4% 0.04 256.788)")}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )
+                                        )}
                             </tbody>
                         </table>
                     </div>

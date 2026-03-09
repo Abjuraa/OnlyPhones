@@ -7,9 +7,10 @@ import CardInfo from '../../components/CardInfo'
 import cardContent from '../../const/cardInfo'
 import { useProducts } from '../../hooks/useProduct'
 import { useNavigate } from 'react-router-dom'
+import { icons } from "../../assets/icons"
 
 function Home() {
-    const { latestProduct, getLatestProducts } = useProducts();
+    const { latestProduct, getLatestProducts, loading } = useProducts();
     const cardRef = useRef(null)
     const slideRef = useRef(null)
     const navigate = useNavigate();
@@ -42,29 +43,34 @@ function Home() {
     return (
         <div className="flex flex-col">
             <h1 className="text-3xl md:text-5xl font-bold py-15 md:px-20 px-5">Ultimos productos</h1>
-            {latestProduct?.length === 0
-                ? <div className="flex justify-center items-center md:text-2xl text-xl font-bold text-gray-400 ">
-                    <h1>No hay productos disponibles.</h1>
+            {loading
+                ? <div className="flex justify-center items-center text-slate-500">
+                    <icons.Loader />
                 </div>
-                : <div className="">
-                    <div className="relative overflow-hidden max-w-screen">
-                        <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden md:ps-22 ps-5 pe-22'>
-                            {latestProduct?.map((p) => (
-                                <div
-                                    key={p.id}
-                                    onClick={() => navigate(`/privada/producto/${p.idProduct}`)}
-                                    className='flex-shrink-0 snap-start'
-                                >
-                                    <Card product={p} />
-                                </div>
-                            ))}
+                : latestProduct?.length === 0
+                    ?
+                    <div className="flex justify-center items-center md:text-2xl text-xl font-bold text-gray-400 ">
+                        <h1>No hay productos disponibles.</h1>
+                    </div>
+                    : <div className="">
+                        <div className="relative overflow-hidden max-w-screen">
+                            <div ref={cardRef} className='flex gap-5 overflow-x-auto overflow-y-hidden md:ps-22 ps-5 pe-22'>
+                                {latestProduct?.map((p) => (
+                                    <div
+                                        key={p.id}
+                                        onClick={() => navigate(`/privada/producto/${p.idProduct}`)}
+                                        className='flex-shrink-0 snap-start'
+                                    >
+                                        <Card product={p} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className='flex justify-end md:px-25 px-5 py-5 gap-5'>
+                            <ScrollButton direction='left' onClick={() => scrollCard('left')} ></ScrollButton>
+                            <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
                         </div>
                     </div>
-                    <div className='flex justify-end md:px-25 px-5 py-5 gap-5'>
-                        <ScrollButton direction='left' onClick={() => scrollCard('left')} ></ScrollButton>
-                        <ScrollButton direction='right' onClick={() => scrollCard('right')}></ScrollButton>
-                    </div>
-                </div>
             }
 
             <h1 className="md:text-5xl text-3xl font-bold py-10 md:px-20 px-5">Sobre los iPhone</h1>

@@ -1,22 +1,11 @@
 import { useState } from 'react';
 import { registerService, loginService } from '../services/authService';
 import { sileo } from 'sileo';
+import { errorRouter } from '../utils/ErrorRouter';
 
 export function useAuth() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-
-    const errorRouter = (err) => {
-        if (err?.response?.data?.message) {
-            return err.response.data.message;
-        }
-
-        if (err?.message) {
-            return err.message;
-        }
-
-        return "Error desconocido";
-    }
 
 
     const register = async (data) => {

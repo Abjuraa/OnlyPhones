@@ -3,12 +3,14 @@ import Sidebar from "../../components/Sidebar"
 import Card from "../../components/Card"
 import { useProducts } from "../../hooks/useProduct"
 import { useNavigate } from "react-router-dom"
+import { icons } from "../../assets/icons"
+
 
 function Categories() {
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 10;
-    const { getAllProducts, products } = useProducts();
+    const { getAllProducts, products, loading } = useProducts();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,12 +46,16 @@ function Categories() {
 
             <div className="flex flex-col w-full">
                 <div className="flex flex-row flex-wrap justify-around items-center gap-4 md:gap-10 p-4 md:p-10 w-full">
-                    {currentProducts?.length === 0 ?
-                        (
+                    {loading
+                        ? <div className="flex justify-center items-center text-slate-500 py-40 md:py-20">
+                            <icons.Loader />
+                        </div>
+                        : currentProducts?.length === 0 ?
+
                             <div className="flex flex-col justify-center items-center py-20">
                                 <p className="text-center text-4xl font-bold text-gray-400">No se encontraron productos, vuelve más tarde</p>
                             </div>
-                        ) : (
+                            :
                             currentProducts?.map((product) => (
                                 <div
                                     key={product.idProduct}
@@ -58,8 +64,8 @@ function Categories() {
                                 >
                                     <Card product={product} />
                                 </div>
-                            ))
-                        )}
+                            )
+                            )}
                 </div>
 
                 <div className="flex justify-center items-center gap-2 py-6 w-full">
